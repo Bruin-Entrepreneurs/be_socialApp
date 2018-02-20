@@ -127,7 +127,7 @@ render() {
 	         	}
 	         </List>
 		  <Text style={styles.creationSubText}> {this.state.namesArray} </Text> 
-		  <Button  onPress{() => } title="Chill!" />
+		  <Button  title="Chill!"  />
       	  </View>
     );
   }
