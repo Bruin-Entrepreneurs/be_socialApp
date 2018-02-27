@@ -1,5 +1,6 @@
 import React, { StyleSheet } from 'react-native';
-import { NAVY } from '../commonstyles';
+import { NAVY } from '../common_styles';
+
 export default StyleSheet.create({
 	eventitem: {
 		borderRadius: 5,
@@ -17,5 +18,6 @@ export default StyleSheet.create({
 	},
 	navy: {
 		color: NAVY,
-	}
-});
+	},
+}
+);

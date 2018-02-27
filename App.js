@@ -4,51 +4,57 @@ import { StackNavigator, } from 'react-navigation';
 import { List, ListItem, Button } from 'react-native-elements'; 
 import EventList from './components/eventlist';
 
+/*****************************************/
+/* Global Variables for Testing Purposes */
+/*****************************************/
 
-var moment = require('moment');
-var idLocale = require('moment/locale/id'); //for Indonesia locale
+const moment = require('moment');
+const idLocale = require('moment/locale/id'); //for Indonesia locale
 moment.locale('id', idLocale);
+
 let pic2 = {
 	uri: 'https://cdn.shopify.com/s/files/1/1061/1924/products/Smiling_Emoji_with_Eyes_Opened_large.png?v=1480481056'
 }
 let allNames = [
-		{
-			name: 'Hao Nguyen', 
-			ImageLink: {pic2}, 
-		},
-		{
-			name: 'Rahul Sheth',
-			ImageLink: {pic2}, 
-		}, 
-		{
-			name: 'Hamilton Tran', 
-			ImageLink: {pic2}, 
-		},
-		{
-			name: 'Michael Yu',
-			ImageLink: {pic2},
-		}
+	{
+		name: 'Hao Nguyen', 
+		ImageLink: {pic2}, 
+	},
+	{
+		name: 'Rahul Sheth',
+		ImageLink: {pic2}, 
+	}, 
+	{
+		name: 'Hamilton Tran', 
+		ImageLink: {pic2}, 
+	},
+	{
+		name: 'Michael Yu',
+		ImageLink: {pic2},
+	}
+];
 
-	];
+var dummyEvents = ["events1", "events2"];
+
 
 
 class HomeScreen extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-   			eventsArray: ["events1", "events2"],
-      	}
+			eventsArray: dummyEvents,
+		}
 	}
 	
 	componentWillMount() {
 		// fetch call goes here to fill eventsArray
-  	}
+	}
 
- 	render() {
+	render() {
 		const { navigate } = this.props.navigation; 
-		let eventsArray = this.state.eventsArray;
-		let pic = {
-		uri: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg'
+		const eventsArray = this.state.eventsArray;
+		const pic = {
+			uri: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg'
 		}; 
 		return (
 			<View style={styles.container} >
@@ -56,17 +62,16 @@ class HomeScreen extends React.Component {
 				<Text style={styles.titleText}>Hello BE!</Text>
 
 				<Button onPress={() => {
-			  		if (eventsArray.length > 0){
-			  			navigate('DisplayEvents', { eventsArray: eventsArray });
-			  		}
-			  		else{
-			  			navigate('Profile');
-			  		}
-			  	}} 
+					if (eventsArray.length > 0) {
+						navigate('DisplayEvents', { eventsArray });
+					} else {
+						navigate('Profile');
+					}
+				}} 
 				title="Next" />
-		  	</View>
+			</View>
 		);
-  	}
+	}
 }
 
 class DisplayEventsScreen extends React.Component {
@@ -76,11 +81,11 @@ class DisplayEventsScreen extends React.Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
-		let {eventsArray} = this.props.navigation.state.params;
+		const { eventsArray } = this.props.navigation.state.params;
 		
 		return(
 			<View>
-				<EventList events={eventsArray}/>
+				<EventList events={ eventsArray }/>
 				<Button onPress={() => navigate('Profile')} title="Create Event" />
 			</View>
 		);
@@ -109,7 +114,7 @@ class CreationScreen extends React.Component {
 			<View style={styles.eventContainer} >
 				<Text style={styles.creationTitleText}>Create Event</Text>
 				<Text style={styles.creationSubText}> Time </Text>
-				<DatePickerIOS date={this.state.chosenDate} onDateChange={(date) => this.setState({ chosenDate: date})} />
+				<DatePickerIOS date={this.state.chosenDate} onDateChange={ date => this.setState({ chosenDate: date})} />
 				<Text style={styles.creationSubText}> Type </Text>
 			<Picker selectedValue={this.state.pickerVal}  mode="dropdown" onValueChange={(itemVal, itemIndex) => this.setState({pickerVal: itemVal})}>
 					<Picker.Item label="Physical Activity" value="Physical"  />

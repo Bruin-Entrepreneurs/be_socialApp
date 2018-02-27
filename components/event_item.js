@@ -1,8 +1,10 @@
 import React from 'react';
 
-import styles from './eventitemstyle';
+import styles from './styles/event_item_style';
 import {
-    Text, View, TouchableHighlight
+    Text, 
+    View, 
+    TouchableHighlight,
 } from 'react-native';
 
 class EventItem extends React.Component {
@@ -10,7 +12,7 @@ class EventItem extends React.Component {
         super();
     }
     render() {
-        var name = this.props.name;
+        const name = this.props.name;
 
         return (
             <View style={styles.eventitem}>
