@@ -149,7 +149,7 @@ class InviteScreen extends React.Component {
 			 <Text style={styles.creationSubText}> {curMoment} </Text>
 			 <Text style={styles.creationSubText}> Activity Type </Text>
 			 <Text style={styles.creationSubText}> {this.props.navigation.state.params.activity} </Text>
-			 <TextInput style={{height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}  value={this.state.inputText} onChangeText={(text) => this.setState({ inputText: text })} />
+			 <TextInput style={{height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}  value={this.state.inputText} onChangeText={text => this.setState({ inputText: text })} />
 
 			 <List containerStyle={{marginBottom: 20, width: 200}}>
 				{
@@ -222,6 +222,7 @@ const App = StackNavigator({
 	Profile: { screen: CreationScreen },
 	Invite: {screen: InviteScreen }, 
 	DisplayEvents: {screen: DisplayEventsScreen},
-});
+}
+);
 
 export default App; 
