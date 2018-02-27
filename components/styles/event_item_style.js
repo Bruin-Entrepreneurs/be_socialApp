@@ -1,5 +1,5 @@
 import React, { StyleSheet } from 'react-native';
-import { NAVY } from '../common_styles';
+import { NAVY } from '../../common_styles';
 
 export default StyleSheet.create({
 	eventitem: {
@@ -19,5 +19,5 @@ export default StyleSheet.create({
 	navy: {
 		color: NAVY,
 	},
-}
-);
+	
+});

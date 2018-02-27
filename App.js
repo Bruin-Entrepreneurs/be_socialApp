@@ -2,39 +2,17 @@ import React from 'react';
 import { Alert, DatePickerIOS, StyleSheet, Text, View, AppRegistry, Image, TextInput, Picker } from 'react-native';
 import { StackNavigator, } from 'react-navigation';
 import { List, ListItem, Button } from 'react-native-elements'; 
-import EventList from './components/eventlist';
+import EventList from './components/event_list';
 
-/*****************************************/
-/* Global Variables for Testing Purposes */
-/*****************************************/
-
-const moment = require('moment');
-const idLocale = require('moment/locale/id'); //for Indonesia locale
-moment.locale('id', idLocale);
-
-let pic2 = {
-	uri: 'https://cdn.shopify.com/s/files/1/1061/1924/products/Smiling_Emoji_with_Eyes_Opened_large.png?v=1480481056'
-}
-let allNames = [
-	{
-		name: 'Hao Nguyen', 
-		ImageLink: {pic2}, 
-	},
-	{
-		name: 'Rahul Sheth',
-		ImageLink: {pic2}, 
-	}, 
-	{
-		name: 'Hamilton Tran', 
-		ImageLink: {pic2}, 
-	},
-	{
-		name: 'Michael Yu',
-		ImageLink: {pic2},
-	}
-];
-
-var dummyEvents = ["events1", "events2"];
+/* import dummy data for testing
+*/
+import {
+	moment,
+	idLocale,
+	pic2,
+	allNames,
+	dummyEvents,
+} from './dummy.js';
 
 
 
@@ -56,6 +34,7 @@ class HomeScreen extends React.Component {
 		const pic = {
 			uri: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg'
 		}; 
+
 		return (
 			<View style={styles.container} >
 				<Image source={pic} style={styles.picture} />
@@ -142,7 +121,8 @@ class InviteScreen extends React.Component {
 	
 	render() {
 		const { navigate } = this.props.navigation;
-		const curMoment = moment(this.props.navigation.state.params.time).format("YYYY/DD/MM")
+		const curMoment = moment(this.props.navigation.state.params.time).format("YYYY/DD/MM");
+		
 		return (
 		  <View style={styles.container} >
 			 <Text style={styles.creationSubText}> Time</Text>

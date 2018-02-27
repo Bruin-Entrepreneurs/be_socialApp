@@ -4,5 +4,5 @@ export default StyleSheet.create({
 	list: {
 		height: 500,
 	},
-}
-);
+	
+});

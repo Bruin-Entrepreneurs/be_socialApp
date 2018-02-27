@@ -9,7 +9,7 @@ class DisplayEventsScreen extends React.Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
-		let { eventsArray } = this.props.navigation.state.params;
+		const { eventsArray } = this.props.navigation.state.params;
 		
 		return(
 			<View>
