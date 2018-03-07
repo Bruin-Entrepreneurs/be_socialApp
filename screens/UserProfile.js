@@ -42,7 +42,7 @@ export default class UserProfile extends React.Component {
 				</View>
 				<View style={styles.buttonContainer}>
 					<Button rounded style={styles.button} color='white' backgroundColor={ NAVY } title="Make an Event" onPress={() => navigate('Profile')} />
-					<Button rounded style={styles.button} color='white' backgroundColor={ NAVY } title="See all Events" onPress={() => navigate('EventPage')} />
+					<Button rounded style={styles.button} color='white' backgroundColor={ NAVY } title="See all Events" onPress={() => navigate('EventScreen')} />
 				</View>
 			</View>
 		);

@@ -23,7 +23,7 @@ import {
 } from 'react-native-elements'; 
 import { CardList } from 'react-native-card-list';
 import UserProfile from './screens/UserProfile';
-
+import EventScreen from './screens/EventScreen';
 
 var {height, width} = Dimensions.get('window');
 
@@ -202,37 +202,7 @@ class InviteScreen extends React.Component {
 
 //------------------------------------------------------
 
-class allEvents extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			curCards: [
-				{
-					id: "0",
-					title: "Food",
-					picture: require('./BE.png'),
-					content: <Text>Big Little Brunch</Text>
-				},
-				{
-					id: "1",
-					title: "Movies",
-					picture: require('./BE.png'),
-					content: <Text> Go see the Oscar Movies</Text>
-				},
-			]
-		};
-	}
-	render() {
-
-		return (
-			<View style={{ flex: 1,}}>
-			<CardList cards={this.state.curCards} />
-			</View>
-
-		);
-	}
-}
 
 const curStyle = StyleSheet.create({
 
@@ -315,7 +285,7 @@ const App = StackNavigator({
 	Profile: { screen: CreationScreen },
 	Invite: {screen: InviteScreen }, 
 	UserProfile: { screen: UserProfile },  
-	EventPage: { screen: allEvents },
+	EventScreen: { screen: EventScreen },
 });
 
 
