@@ -22,6 +22,7 @@ import {
 	Card,
 } from 'react-native-elements'; 
 import { CardList } from 'react-native-card-list';
+import UserProfile from './screens/UserProfile';
 
 
 var {height, width} = Dimensions.get('window');
@@ -40,22 +41,20 @@ class HomeView extends React.Component {
 		
 		return (
 			<View
-			style={{
+				style={{
 				flexDirection: 'column',
 				height: height,
-			}}>
-			<View style={{backgroundColor: '#b2d8d8', flex: 0.6}}> 
-			<Image source={require('./BE.png')} style={styles.picture} />
-
-			<Text style={styles.titleText} >Hello BE!</Text>
+				}}>
+				<View style={{backgroundColor: '#b2d8d8', flex: 0.6}}> 
+					<Image source={require('./BE.png')} style={styles.picture} />
+					<Text style={styles.titleText} >Hello BE!</Text>
+				</View>
+				<View style={{backgroundColor: 'white', flex: 0.4}}>
+					<TextInput style={styles.textInputLanding} value={this.state.textInputVal} onChangeText={(text) => this.setState({ textInputVal: text })} />
+					<TextInput style={styles.textInputLanding} secureTextEntry={true} value={this.state.passwordVal} onChangeText={(text) => this.setState({ passwordVal: text })} />
+					<Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' onPress={() => navigate('UserProfile')} title="Move on" />
+				</View>
 			</View>
-			<View style={{backgroundColor: 'white', flex: 0.4}}>
-			 <TextInput style={styles.textInputLanding} value={this.state.textInputVal} onChangeText={(text) => this.setState({ textInputVal: text })} />
-			 <TextInput style={styles.textInputLanding} secureTextEntry={true} value={this.state.passwordVal} onChangeText={(text) => this.setState({ passwordVal: text })} />
-			 <Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' onPress={() => navigate('UserProfile')} title="Move on" />
-			</View>
-			</View>
-		 
 		);
 	}
 }
@@ -90,7 +89,7 @@ class CreationScreen extends React.Component {
 				<Text style={styles.creationSubText}> Time </Text>
 				<DatePickerIOS date={this.state.chosenDate} onDateChange={(date) => this.setState({ chosenDate: date})} />
 				<Text style={styles.creationSubText}> Type </Text>
-			<Picker selectedValue={this.state.pickerVal}  mode="dropdown" onValueChange={(itemVal, itemIndex) => this.setState({pickerVal: itemVal})}>
+			<Picker selectedValue={this.state.pickerVal}  mode="dropdown" onValueChange={(pickerVal, itemIndex) => this.setState({pickerVal})}>
 					<Picker.Item label="Physical Activity" value="Physical"  />
 					<Picker.Item label="Food" value="Food"  />
 					<Picker.Item label="Explore" value="Explore"  />
@@ -133,6 +132,8 @@ let allNames = [
 	}
 
 ];
+
+
 class InviteScreen extends React.Component {
 	constructor(props) {
 		super(props);
@@ -144,111 +145,60 @@ class InviteScreen extends React.Component {
 	}
 
 	makePostRequest() {
-		fetch('#URL', {
-			method: 'POST', 
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			}, 
-			body: JSON.stringify({ 
-				startTime: curMoment, 
+		// fetch('#URL', {
+		// 	method: 'POST', 
+		// 	headers: {
+		// 		Accept: 'application/json',
+		// 		'Content-Type': 'application/json',
+		// 	}, 
+		// 	body: JSON.stringify({ 
+		// 		startTime: curMoment, 
 
-			}), 
-		})
+		// 	}), 
+		// })
 	}
-	
 
 
-
-render() {
+	render() {
 		const curMoment = moment(this.props.navigation.state.params.time).format("YYYY/DD/MM")
 		const { navigate } = this.props.navigation;
 		return (
 			<View style={styles.container} >
-			 <Text style={styles.creationSubText}> Time</Text>
-			 <Text style={styles.creationSubText}> {curMoment} </Text>
-			 <Text style={styles.creationSubText}> Activity Type </Text>
-			 <Text style={styles.creationSubText}> {this.props.navigation.state.params.activity} </Text>
-			 <TextInput style={{height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}  value={this.state.inputText} onChangeText={(text) => this.setState({ inputText: text })} />
-			 
-			 <List containerStyle={{marginBottom: 20, width: 200}}>
-				{
+				<Text style={styles.creationSubText}> Time</Text>
+				<Text style={styles.creationSubText}> {curMoment} </Text>
+				<Text style={styles.creationSubText}> Activity Type </Text>
+				<Text style={styles.creationSubText}> {this.props.navigation.state.params.activity} </Text>
+				<TextInput style={{height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}  value={this.state.inputText} onChangeText={(text) => this.setState({ inputText: text })} />
+				 
+				<List containerStyle={{marginBottom: 20, width: 200}}>
+					{
+						
+						allNames.map((l, i) => (
+							<ListItem 
+								key={i}
+								title={l.name}
+						onPress={(person) => this.setState ({ namesArray: [...this.state.namesArray, l.initials], })}
+							/>
+						))
+					}
+				 </List>
 					
-					allNames.map((l, i) => (
-						<ListItem 
-							key={i}
-							title={l.name}
-					onPress={(person) => this.setState ({ namesArray: [...this.state.namesArray, l.initials], })}
-						/>
-					))
-				}
-			 </List>
-				
-				<FlatList
-				 data={this.state.namesArray}
-				 renderItem={({item}) => <Avatar 
-											small 
-											rounded
-											title={item}
-											/>}
-				 horizontal={true}
-				/>
-			 
-				<Button  title="Chill!" onPress={() => this.makePostRequest({curMoment})} />
+					<FlatList
+					 data={this.state.namesArray}
+					 renderItem={({item}) => <Avatar 
+												small 
+												rounded
+												title={item}
+												/>}
+					 horizontal={true}
+					/>
+				 
+					<Button  title="Chill!" onPress={() => this.makePostRequest({curMoment})} />
 			</View>
 	);
 	}
 }
 
-//-------------------------------------------------------
-//USER PROFILE SCREEN
-
-class userProfile extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		userName: 'Default',
-		imageURL: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg',
-		eventsArray: ['None'], 
-	};
-	}
-	componentDidMount() {
-	fetch("#API NAME")
-		.then(response => response.json) 
-		.then(data => this.setState({ 
-			userName: data.userName,
-			imageURL: data.imageURL,
-			eventsArray: data.eventsArray,
-			}));
-	}
-	 
-
-	//Need to write fetch request to get profile picture data 
-	render() {
-	const { navigate } = this.props.navigation;
-
-	return (
-			<View style={{ backgroundColor: '#b2d8d8', flex: 1 }} >
-			<Avatar 
-			containerStyle={curStyle.profilePicture}
-			large
-			rounded
-			source={{ uri: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg'}}
-			/>
-			<View style={{ flex: 1, flexDirection: "row"}}>
-			<Text style={curStyle.ProfileName}> {this.state.userName} </Text>
-			<Button style={{alignSelf: 'flex-end'}} color='white' backgroundColor='#2196f3' title='Change' />
-			</View>
-		 <Button  color='white' backgroundColor='#2196f3' title="Make an Event" onPress={() => navigate('Profile')} />
-		 <Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' title="See all Events" onPress={() => navigate('EventPage')} />
-			</View>
-		 
-		 
-		 
-		); 
-		}
-
-	}
 
 //------------------------------------------------------
 
@@ -364,9 +314,9 @@ const App = StackNavigator({
 	Home: { screen: HomeView}, 
 	Profile: { screen: CreationScreen },
 	Invite: {screen: InviteScreen }, 
-	UserProfile: { screen: userProfile },  
+	UserProfile: { screen: UserProfile },  
 	EventPage: { screen: allEvents },
-	});
+});
 
 
 
