@@ -1,11 +1,10 @@
 import React from 'react';
-import { Alert, DatePickerIOS, StyleSheet, Text, View, AppRegistry, Image, TextInput, Picker, Dimensions, ScrollView, FlatList } from 'react-native';
+import { Alert, DatePickerIOS, StyleSheet, Text, View, AppRegistry, Image, TextInput, Picker, Dimensions, ScrollView, ListView } from 'react-native';
 import { StackNavigator, } from 'react-navigation';
 import { List, ListItem, Button, Avatar, Card, } from 'react-native-elements'; 
 import { CardList } from 'react-native-card-list';
 
 
- var {height, width} = Dimensions.get('window');
 //---------------------------------------------------------------
 //HOME VIEW SCREEN 
 
@@ -21,7 +20,7 @@ class HomeView extends React.Component {
 	
  render() {
      const { navigate } = this.props.navigation; 
-    
+     var {height, width} = Dimensions.get('window');
     return (
     	 <View
         style={{
@@ -121,10 +120,10 @@ let allNames = [
 class InviteScreen extends React.Component {
  	constructor(props) {
 		super(props);
+		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2});
 		this.state = {
 	   		 inputText: "Enter Name",
-			 namesArray: [],
-			 mapNames: allNames,
+			 dataSource: ds.cloneWithRows([]),  
 		}; 
 	}
 
@@ -158,25 +157,23 @@ render() {
 	         
 	         <List containerStyle={{marginBottom: 20, width: 200}}>
 	         	{
-	         		
 	         		allNames.map((l, i) => (
 	         			<ListItem 
 	         				key={i}
 	         				title={l.name}
-					onPress={(person) => this.setState ({ namesArray: [...this.state.namesArray, l.initials], })}
+					onPress={(person) => this.setState ({ dataSource: this.state.dataSource.cloneWithRows([...this.state.dataSource, l.initials])})
 	         			/>
 	         		))
 	         	}
 	         </List>
 		  	  
-		  	  	<FlatList
- 				 data={this.state.namesArray}
- 				 renderItem={({item}) => <Avatar 
- 				 							small 
- 											rounded
- 											title={item}
- 											/>}
-		  	  	 horizontal={true}
+		  	  	<ListView
+					dataSource={this.state.dataSource}
+		  	  		renderRow={(data) => <Avatar
+		  	  								small
+		  	  								rounded
+		  	  								title={data} />}
+		  	  		horizontal={true}
 		  	  	/>
 		  	 
                 <Button  title="Chill!" onPress={() => this.makePostRequest({curMoment})} />
@@ -220,11 +217,9 @@ class userProfile extends React.Component {
 			rounded
 			source={{ uri: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg'}}
 			/>
-			<View style={{ flex: 1, flexDirection: "row"}}>
+
 			<Text style={curStyle.ProfileName}> {this.state.userName} </Text>
-			<Button style={{alignSelf: 'flex-end'}} color='white' backgroundColor='#2196f3' title='Change' />
-			</View>
-       <Button  color='white' backgroundColor='#2196f3' title="Make an Event" onPress={() => navigate('Profile')} />
+       <Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' title="Make an Event" onPress={() => navigate('Profile')} />
        <Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' title="See all Events" onPress={() => navigate('EventPage')} />
 			</View>
        
@@ -283,7 +278,8 @@ const curStyle = StyleSheet.create({
 	ProfileName: {
 		fontSize: 40,
 		color: 'white',
-		marginLeft: width / 3,
+		justifyContent: 'center',
+		alignSelf: 'center',
 	},
 })
 
