@@ -24,180 +24,18 @@ import {
 import { CardList } from 'react-native-card-list';
 import UserProfile from './screens/UserProfile';
 import EventScreen from './screens/EventScreen';
+import HomeView from './screens/HomeScreen'; 
+import CreationScreen from './screens/CreationScreen'; 
+import InviteScreen from './screens/InviteScreen'; 
 
 var {height, width} = Dimensions.get('window');
 
-// HOME VIEW SCREEN 
-class HomeView extends React.Component {
-	constructor(props) {
-		super(props); 
-		this.state = {
-			textInputVal: 'username',
-			passwordVal: 'password', 
-		};
-	}
-	render() {
-		const { navigate } = this.props.navigation; 
-		
-		return (
-			<View
-				style={{
-				flexDirection: 'column',
-				height: height,
-				}}>
-				<View style={{backgroundColor: '#b2d8d8', flex: 0.6}}> 
-					<Image source={require('./BE.png')} style={styles.picture} />
-					<Text style={styles.titleText} >Hello BE!</Text>
-				</View>
-				<View style={{backgroundColor: 'white', flex: 0.4}}>
-					<TextInput style={styles.textInputLanding} value={this.state.textInputVal} onChangeText={(text) => this.setState({ textInputVal: text })} />
-					<TextInput style={styles.textInputLanding} secureTextEntry={true} value={this.state.passwordVal} onChangeText={(text) => this.setState({ passwordVal: text })} />
-					<Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' onPress={() => navigate('UserProfile')} title="Move on" />
-				</View>
-			</View>
-		);
-	}
-}
-
-//CREATION SCREEN 
-
-var moment = require('moment');
-var idLocale = require('moment/locale/id'); 
-moment.locale('id', idLocale);
-
-class CreationScreen extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			 chosenDate: new Date(),
-			 pickerVal: 'Physical Activity',
-		}; 
-	}
-	
-	render() {
-		let typeFields = [ 
-				{label: "Basketball", value: "ball"}, 
-				{label: "Food", value: "food"},
-				{label: "Hiking", value: "hike"}
-		];
-
-		const { navigate } = this.props.navigation; 
-
-		return (
-			<View style={styles.eventContainer} >
-				<Text style={styles.creationTitleText}>Create Event</Text>
-				<Text style={styles.creationSubText}> Time </Text>
-				<DatePickerIOS date={this.state.chosenDate} onDateChange={(date) => this.setState({ chosenDate: date})} />
-				<Text style={styles.creationSubText}> Type </Text>
-			<Picker selectedValue={this.state.pickerVal}  mode="dropdown" onValueChange={(pickerVal, itemIndex) => this.setState({pickerVal})}>
-					<Picker.Item label="Physical Activity" value="Physical"  />
-					<Picker.Item label="Food" value="Food"  />
-					<Picker.Item label="Explore" value="Explore"  />
-					<Picker.Item label="Music" value="Music"  />
-				</Picker>
-			
-				<Button title="Next" onPress={()=> navigate('Invite', {time: this.state.chosenDate, activity: this.state.pickerVal})} />
-			</View>
-
-		);
-	
-	}
-}
 
 
-//-----------------------------------------------------
-//INVITE SCREEN
 
 
-let allNames = [
-	{
-		name: 'Hao Nguyen', 
-		initials: 'HN',
-		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg', 
-	},
-	{
-		name: 'Rahul Sheth',
-		initials: 'RS',
-		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg', 
-	}, 
-	{
-		name: 'Hamilton Tran', 
-		initials: 'HT',
-		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg', 
-	},
-	{
-		name: 'Michael Yu',
-		initials: 'MY',
-		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg',
-	}
-
-];
 
 
-class InviteScreen extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			 inputText: "Enter Name",
-			 namesArray: [],
-			 mapNames: allNames,
-		}; 
-	}
-
-	makePostRequest() {
-		// fetch('#URL', {
-		// 	method: 'POST', 
-		// 	headers: {
-		// 		Accept: 'application/json',
-		// 		'Content-Type': 'application/json',
-		// 	}, 
-		// 	body: JSON.stringify({ 
-		// 		startTime: curMoment, 
-
-		// 	}), 
-		// })
-	}
-
-
-	render() {
-		const curMoment = moment(this.props.navigation.state.params.time).format("YYYY/DD/MM")
-		const { navigate } = this.props.navigation;
-		return (
-			<View style={styles.container} >
-				<Text style={styles.creationSubText}> Time</Text>
-				<Text style={styles.creationSubText}> {curMoment} </Text>
-				<Text style={styles.creationSubText}> Activity Type </Text>
-				<Text style={styles.creationSubText}> {this.props.navigation.state.params.activity} </Text>
-				<TextInput style={{height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}  value={this.state.inputText} onChangeText={(text) => this.setState({ inputText: text })} />
-				 
-				<List containerStyle={{marginBottom: 20, width: 200}}>
-					{
-						
-						allNames.map((l, i) => (
-							<ListItem 
-								key={i}
-								title={l.name}
-						onPress={(person) => this.setState ({ namesArray: [...this.state.namesArray, l.initials], })}
-							/>
-						))
-					}
-				 </List>
-					
-					<FlatList
-					 data={this.state.namesArray}
-					 renderItem={({item}) => <Avatar 
-												small 
-												rounded
-												title={item}
-												/>}
-					 horizontal={true}
-					/>
-				 
-					<Button  title="Chill!" onPress={() => this.makePostRequest({curMoment})} />
-			</View>
-	);
-	}
-}
 
 
 //------------------------------------------------------
