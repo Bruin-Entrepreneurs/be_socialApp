@@ -22,6 +22,7 @@ import {
 	Card,
 } from 'react-native-elements'; 
 import { CardList } from 'react-native-card-list';
+
 var {height, width} = Dimensions.get('window');
 
 export default class HomeView extends React.Component {
