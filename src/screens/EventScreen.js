@@ -4,7 +4,7 @@ import { Card, } from 'react-native-elements';
 import { StackNavigator, } from 'react-navigation';
 
 import CardList from '../components/CardList';
-import { events } from '../global';
+import { events } from '../../data';
 
 export default class EventScreen extends React.Component {
 	constructor(props) {

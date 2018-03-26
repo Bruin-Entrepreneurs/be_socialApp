@@ -9,7 +9,7 @@ import {
 } from 'react-native-elements'; 
 import { StackNavigator, } from 'react-navigation';
 import styles from './styles/UserProfileStyle';
-import { NAVY } from '../globalStyles'
+import { NAVY } from '../constants/styles'
 
 export default class UserProfile extends React.Component {
 	constructor(props) {

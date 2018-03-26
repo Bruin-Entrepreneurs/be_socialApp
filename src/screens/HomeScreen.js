@@ -43,7 +43,7 @@ export default class HomeView extends React.Component {
 				height: height,
 				}}>
 				<View style={{backgroundColor: '#b2d8d8', flex: 0.6}}> 
-					<Image source={require('../BE.png')} style={styles.picture} />
+					<Image source={require('../../assets/BE.png')} style={styles.picture} />
 					<Text style={styles.titleText} >Hello BE!</Text>
 				</View>
 				<View style={{backgroundColor: 'white', flex: 0.4}}>

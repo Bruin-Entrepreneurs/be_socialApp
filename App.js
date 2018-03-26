@@ -22,24 +22,16 @@ import {
 	Card,
 } from 'react-native-elements'; 
 import { CardList } from 'react-native-card-list';
-import UserProfile from './screens/UserProfile';
-import EventScreen from './screens/EventScreen';
-import HomeView from './screens/HomeScreen'; 
-import CreationScreen from './screens/CreationScreen'; 
-import InviteScreen from './screens/InviteScreen'; 
+import UserProfile from './src/screens/UserProfile';
+import EventScreen from './src/screens/EventScreen';
+import HomeView from './src/screens/HomeScreen'; 
+import CreationScreen from './src/screens/CreationScreen'; 
+import InviteScreen from './src/screens/InviteScreen'; 
 
 var {height, width} = Dimensions.get('window');
 
 
-
-
-
-
-
-
-
 //------------------------------------------------------
-
 
 
 const curStyle = StyleSheet.create({
@@ -125,7 +117,6 @@ const App = StackNavigator({
 	UserProfile: { screen: UserProfile },  
 	EventScreen: { screen: EventScreen },
 });
-
 
 
 export default App; 
