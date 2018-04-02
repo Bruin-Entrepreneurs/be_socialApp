@@ -10,18 +10,19 @@ import {
 import styles from './styles/CardListStyle';
 
 const EventList = ({cards}) => {
+	console.log(styles.eventContainer)
 	return (
 		<Card>
 			{cards.map((card, i) => {
 				return (
-	        <View key={i} style={styles.eventContainer}>
-	          <Image
-	          	style={styles.image}
-	            source={{uri: card.img}}
-          	/>
-          	<Text style={styles.text}>{card.title}</Text>
-	        </View>
-        )}
+					<View key={i} style={styles.eventContainer}>
+						<Image
+							style={styles.image}
+							source={{uri: card.img}}
+						/>
+						<Text style={styles.text}>{card.title}</Text>
+					</View>
+				)}
 			)}
 		</Card>
 	)

@@ -17,11 +17,11 @@ import { StackNavigator, } from 'react-navigation';
 import { 
 	List, 
 	ListItem, 
-	Button, 
 	Avatar, 
 	Card,
 } from 'react-native-elements'; 
 import { CardList } from 'react-native-card-list';
+import Button from '../components/Button';
 
 var {height, width} = Dimensions.get('window');
 
@@ -49,7 +49,7 @@ export default class HomeView extends React.Component {
 				<View style={{backgroundColor: 'white', flex: 0.4}}>
 					<TextInput style={styles.textInputLanding} value={this.state.textInputVal} onChangeText={(text) => this.setState({ textInputVal: text })} />
 					<TextInput style={styles.textInputLanding} secureTextEntry={true} value={this.state.passwordVal} onChangeText={(text) => this.setState({ passwordVal: text })} />
-					<Button style={{marginTop: 20}} color='white' backgroundColor='#2196f3' onPress={() => navigate('UserProfile')} title="Move on" />
+					<Button half center title="Welcome!" onPress={() => navigate('UserProfile')}/>
 				</View>
 			</View>
 		);

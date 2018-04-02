@@ -4,12 +4,12 @@ import {
 	Text,
 } from 'react-native';
 import { 
-	Button, 
 	Avatar, 
 } from 'react-native-elements'; 
 import { StackNavigator, } from 'react-navigation';
 import styles from './styles/UserProfileStyle';
 import { NAVY } from '../constants/styles'
+import Button from '../components/Button';
 
 export default class UserProfile extends React.Component {
 	constructor(props) {
@@ -38,12 +38,10 @@ export default class UserProfile extends React.Component {
 					<View style={styles.profileText}>
 						<Text style={styles.profileName}> {this.state.name} </Text>
 					</View>
-					<Button rounded style={styles.profileButton} color='white' backgroundColor={ NAVY } title='Change' />
+					<Button half title='Change'/>
 				</View>
-				<View style={styles.buttonContainer}>
-					<Button rounded style={styles.button} color='white' backgroundColor={ NAVY } title="Make an Event" onPress={() => navigate('Profile')} />
-					<Button rounded style={styles.button} color='white' backgroundColor={ NAVY } title="See all Events" onPress={() => navigate('EventScreen')} />
-				</View>
+				<Button full title="Make an Event" onPress={() => navigate('Profile')} />
+				<Button full title="See all Events" onPress={() => navigate('EventScreen')} />
 			</View>
 		);
 	}
