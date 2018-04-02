@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		justifyContent: 'center',
 	},
-	
 	creationSubText: {
 		fontSize: 25, 
 		paddingTop: 20,
@@ -80,23 +79,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff', 
 	}, 
-	
 	container: {
-	flex: 1,
-	backgroundColor: '#b2d8d8',
-	alignItems: 'center',
-	 
+		flex: 1,
+		backgroundColor: '#b2d8d8',
+		alignItems: 'center',
 	},
 	textInputLanding: {
-	marginTop: 15,
-	height: 40, 
-	width: 200, 
-	borderColor: 'black', 
-	borderWidth: 2,
-	alignSelf: 'center', 
+		marginTop: 15,
+		height: 40, 
+		width: 200, 
+		borderColor: 'black', 
+		borderWidth: 2,
+		alignSelf: 'center', 
 	},
-
-	
 	titleText: {
 		fontSize: 50,
 		fontWeight: 'bold', 
@@ -104,9 +99,7 @@ const styles = StyleSheet.create({
 		marginTop: 50,
 		alignSelf: 'center',
 	},
-	TopButton: {
-		backgroundColor: "#792184", 
-	},
+	TopButton: {backgroundColor: "#792184" },
 });
 
 

@@ -19,4 +19,4 @@ export default StyleSheet.create({
 		flex: .8,
 		fontSize: 20,
 	}
-})
+});

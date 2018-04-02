@@ -1,6 +1,3 @@
-import React from 'react';
-import { Image, } from 'react-native';
-
 const event_types = [ 
 	{label: "Basketball", value: "ball"}, 
 	{label: "Food", value: "food"},

@@ -14,26 +14,26 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-		profilePicture: {
-			flex: .5,
-			backgroundColor: 'transparent',
-		},
-		profileText: {
-			flex: .2,
+	profilePicture: {
+		flex: .5,
+		backgroundColor: 'transparent',
+	},
+	profileText: {
+		flex: .2,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+		profileName: {
+			fontSize: 25,
+			color: NAVY,
 			display: 'flex',
-			alignItems: 'center',
+			alignContent: 'center',
 			justifyContent: 'center',
 		},
-			profileName: {
-				fontSize: 25,
-				color: NAVY,
-				display: 'flex',
-				alignContent: 'center',
-				justifyContent: 'center',
-			},
-		profileButton: {
-			flex: .2,
-		},
+	profileButton: {
+		flex: .2,
+	},
 	buttonContainer: {		
 		flex: .2,
 		display: 'flex',
