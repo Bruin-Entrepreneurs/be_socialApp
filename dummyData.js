@@ -1,4 +1,4 @@
-const event_types = [ 
+const eventTypes = [ 
 	{label: "Basketball", value: "ball"}, 
 	{label: "Food", value: "food"},
 	{label: "Hiking", value: "hike"},
@@ -40,4 +40,4 @@ const allNames = [
 
 const imgURL = 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg';
 
-export { events, allNames, imgURL };
+export { eventTypes, events, allNames, imgURL };

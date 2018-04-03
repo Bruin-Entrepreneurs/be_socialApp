@@ -1,25 +1,25 @@
 import React from 'react';
 import {
-	View,
 	Text,
 	TouchableOpacity,
+	View,
 } from 'react-native';
 
-import styles from './styles/ButtonStyle';
+import styles from './styles/buttonStyle';
 
 const Button = ({title, onPress, full, half, center}) => {
-	const k = [styles.full];	//k is a list of styles for the outer <View>
+	const containerStyles = [styles.full];	//k is a list of styles for the outer <View>
 
 	if (half) {
-		k.push(styles.half);
+		containerStyles.push(styles.half);
 	}
 
 	if (center) {
-		k.push(styles.center);
+		containerStyles.push(styles.center);
 	}
 
 	return (
-		<View style={k}>
+		<View style={containerStyles}>
 			<TouchableOpacity onPress={onPress} style={styles.button}>
 				<Text style={styles.text}>{title}</Text>
 			</TouchableOpacity>

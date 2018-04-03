@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import CardList from '../components/CardList';
-import { events } from '../../data';
+import { events } from '../../dummyData';
 
 export default class EventScreen extends React.Component {
 	constructor(props) {
@@ -16,10 +16,10 @@ export default class EventScreen extends React.Component {
 		/* TODO */
 		/* populate this.state.events w/api call */
 	}
-	
+
 	render() {
 		return (
-			<View style={{ flex: 1,}}>
+			<View style={{ flex: 1 }}>
 				<CardList cards={this.state.cards} />
 			</View>
 		);

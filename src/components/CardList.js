@@ -1,13 +1,13 @@
 import React from 'react';
 import { Card } from 'react-native-elements'; 
 import {
-	ListView, 
-	View,
-	Text,
 	Image,
+	ListView,
+	Text,
+	View,
 } from 'react-native';
 
-import styles from './styles/CardListStyle';
+import styles from './styles/cardListStyle';
 
 const EventList = ({cards}) => {
 	return (

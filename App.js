@@ -9,8 +9,8 @@ import UserProfile from './src/screens/UserProfile';
 const App = StackNavigator({
 	Home: { screen: HomeScreen}, 
 	Profile: { screen: CreationScreen },
-	Invite: {screen: InviteScreen }, 
-	UserProfile: { screen: UserProfile },  
+	Invite: { screen: InviteScreen }, 
+	UserProfile: { screen: UserProfile },
 	EventScreen: { screen: EventScreen },
 });
 

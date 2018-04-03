@@ -1,15 +1,15 @@
 import React from 'react';
-import { 
-	Text, 
-	View, 
+import {
 	Image, 
 	Picker,
+	Text, 
+	View, 
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import { CardList } from 'react-native-card-list';
 import Button from '../components/Button';
 import styles from './styles/CreationScreenStyle';
+import { eventTypes } from '../../dummyData';
 
 const moment = require('moment');
 const idLocale = require('moment/locale/id'); 
@@ -22,6 +22,7 @@ export default class CreationScreen extends React.Component {
 			chosenDate: new Date(),
 			picker: false,
 			pickerVal: 'Physical Activity',
+			eventTypes: eventTypes,
 		};
 
 		this.updateDatePicker = this.updateDatePicker.bind(this);
@@ -57,10 +58,11 @@ export default class CreationScreen extends React.Component {
 				<Button full title="date" onPress={() => {}}/>
 				<Text style={styles.creationSubText}> Type </Text>
 				<Picker selectedValue={this.state.pickerVal}  mode="dropdown" onValueChange={(pickerVal, itemIndex) => this.setState({pickerVal})}>
-					<Picker.Item label="Physical Activity" value="Physical"  />
-					<Picker.Item label="Food" value="Food"  />
-					<Picker.Item label="Explore" value="Explore"  />
-					<Picker.Item label="Music" value="Music"  />
+					{
+						eventTypes.map((e, i) => (
+							<Picker.Item key={i} label={e.label} value={e.value} />
+						))
+					}
 				</Picker>
 			
 				<Button title="Next" onPress={()=> navigate('Invite', {time: this.state.chosenDate, activity: this.state.pickerVal})} />

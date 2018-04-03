@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
-	View,
 	Text,
+	View,
 } from 'react-native';
 import { 
 	Avatar, 
@@ -10,7 +10,7 @@ import { StackNavigator } from 'react-navigation';
 
 import styles from './styles/UserProfileStyle';
 import Button from '../components/Button';
-import { imgURL } from '../../data';
+import { imgURL } from '../../dummyData';
 
 export default class UserProfile extends React.Component {
 	constructor(props) {

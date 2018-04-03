@@ -1,19 +1,19 @@
 import React from 'react';
-import { 
-	View,
-	Text,
-	TextInput,
+import {
 	Dimensions, 
 	FlatList,
+	Text,
+	TextInput,	
+	View,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { 
+import {
+	Avatar,
 	List, 
 	ListItem,
-	Avatar,
 } from 'react-native-elements'; 
 
-import { allNames } from '../../data';
+import { allNames } from '../../dummyData';
 import Button from '../components/Button';
 import styles from './styles/InviteScreenStyle';
 
@@ -41,7 +41,7 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const curMoment = moment(this.props.navigation.state.params.time).format("YYYY/DD/MM")
+		const curMoment = moment(this.props.navigation.state.params.time).format("YYYY/DD/MM");
 		const { navigate } = this.props.navigation;
 
 		return (

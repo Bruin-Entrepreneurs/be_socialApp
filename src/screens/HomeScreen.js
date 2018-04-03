@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-	View,
-	Image,
+import {
+	Dimensions,
+ 	Image,
 	Text,
 	TextInput,
-	Dimensions,
+	View,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 

@@ -39,8 +39,8 @@ export default StyleSheet.create({
 		display: 'flex',
 		alignItems: 'center',
 	},
-		button: {
-			flex: .5,
-			minWidth: '80%',
-		}
+	button: {
+		flex: .5,
+		minWidth: '80%',
+	}
 });

@@ -10,7 +10,6 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 		justifyContent: 'center',
 	},
-
 	creationSubText: {
 		fontSize: 25, 
 		paddingTop: 20,
@@ -28,20 +27,18 @@ export default StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff', 
 	}, 
-
 	container: {
-	flex: 1,
-	backgroundColor: '#b2d8d8',
-	alignItems: 'center',
-	 
+		flex: 1,
+		backgroundColor: '#b2d8d8',
+		alignItems: 'center', 
 	},
 	textInputLanding: {
-	marginTop: 15,
-	height: 40, 
-	width: 200, 
-	borderColor: 'black', 
-	borderWidth: 2,
-	alignSelf: 'center', 
+		marginTop: 15,
+		height: 40, 
+		width: 200, 
+		borderColor: 'black', 
+		borderWidth: 2,
+		alignSelf: 'center', 
 	},
 	titleText: {
 		fontSize: 50,
@@ -53,7 +50,6 @@ export default StyleSheet.create({
 	TopButton: {
 		backgroundColor: "#792184", 
 	},
-
 	logoContainer: {
 		flex: 0.6,
 		backgroundColor: CREAM,
