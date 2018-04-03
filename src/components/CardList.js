@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, } from 'react-native-elements'; 
+import { Card } from 'react-native-elements'; 
 import {
 	ListView, 
 	View,
@@ -10,7 +10,6 @@ import {
 import styles from './styles/CardListStyle';
 
 const EventList = ({cards}) => {
-	console.log(styles.eventContainer)
 	return (
 		<Card>
 			{cards.map((card, i) => {

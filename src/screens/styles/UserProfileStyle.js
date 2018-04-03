@@ -1,4 +1,4 @@
-import React, { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NAVY } from '../../constants/styles';
 
 export default StyleSheet.create({
@@ -24,13 +24,13 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-		profileName: {
-			fontSize: 25,
-			color: NAVY,
-			display: 'flex',
-			alignContent: 'center',
-			justifyContent: 'center',
-		},
+	profileName: {
+		fontSize: 25,
+		color: NAVY,
+		display: 'flex',
+		alignContent: 'center',
+		justifyContent: 'center',
+	},
 	profileButton: {
 		flex: .2,
 	},
@@ -43,4 +43,4 @@ export default StyleSheet.create({
 			flex: .5,
 			minWidth: '80%',
 		}
-})
+});

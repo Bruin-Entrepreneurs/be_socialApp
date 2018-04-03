@@ -1,4 +1,4 @@
-import React, { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NAVY } from '../../constants/styles';
 
 export default StyleSheet.create({

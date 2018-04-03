@@ -15,4 +15,29 @@ const events = [
 	},
 ]
 
-export { events };
+const allNames = [
+	{
+		name: 'Hao Nguyen', 
+		initials: 'HN',
+		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg', 
+	},
+	{
+		name: 'Rahul Sheth',
+		initials: 'RS',
+		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg', 
+	}, 
+	{
+		name: 'Hamilton Tran', 
+		initials: 'HT',
+		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg', 
+	},
+	{
+		name: 'Michael Yu',
+		initials: 'MY',
+		ImageLink: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg',
+	}
+];
+
+const imgURL = 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg';
+
+export { events, allNames, imgURL };

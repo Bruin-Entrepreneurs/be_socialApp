@@ -6,22 +6,23 @@ import {
 import { 
 	Avatar, 
 } from 'react-native-elements'; 
-import { StackNavigator, } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
+
 import styles from './styles/UserProfileStyle';
-import { NAVY } from '../constants/styles'
 import Button from '../components/Button';
+import { imgURL } from '../../data';
 
 export default class UserProfile extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			name: 'name_placeholder',
-			imageURL: 'https://pbs.twimg.com/profile_images/862164234947440640/WqQ358Yw_400x400.jpg',
+			imageURL: imgURL,
 		};
 	}
 	componentDidMount() {
 		/*  TO DO:
-				fetch call to populate state */
+			fetch call to populate state */
 	}
 	 
 	render() {

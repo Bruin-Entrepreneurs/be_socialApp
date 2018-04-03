@@ -8,17 +8,18 @@ import {
 import styles from './styles/ButtonStyle';
 
 const Button = ({title, onPress, full, half, center}) => {
-	const k_container = [styles.full];
+	const k = [styles.full];	//k is a list of styles for the outer <View>
+
 	if (half) {
-		k_container.push(styles.half);
+		k.push(styles.half);
 	}
 
 	if (center) {
-		k_container.push(styles.center);
+		k.push(styles.center);
 	}
 
 	return (
-		<View style={k_container}>
+		<View style={k}>
 			<TouchableOpacity onPress={onPress} style={styles.button}>
 				<Text style={styles.text}>{title}</Text>
 			</TouchableOpacity>

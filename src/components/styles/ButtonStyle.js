@@ -1,4 +1,4 @@
-import React, { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NAVY, CREAM } from '../../constants/styles';
 
 export default StyleSheet.create({
@@ -8,6 +8,7 @@ export default StyleSheet.create({
 		alignContent: 'center',
 		alignItems: 'center',
 		marginTop: 10,
+		width: '100%',
 	},
 	half: {
 		width: '50%',
@@ -17,12 +18,12 @@ export default StyleSheet.create({
 	},
 	button: {
 		backgroundColor: NAVY,
-    borderColor: "transparent",
-    alignItems: 'center',
-    borderRadius: 50,
-    display: 'flex',
-    justifyContent: 'center',
-    width: '75%',
+		borderColor: "transparent",
+		alignItems: 'center',
+		borderRadius: 50,
+		display: 'flex',
+		justifyContent: 'center',
+		width: '75%',
 	},
 	text: {
 		fontSize: 17,
