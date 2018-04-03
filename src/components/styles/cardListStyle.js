@@ -1,4 +1,4 @@
-import React, { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NAVY } from '../../constants/styles';
 
 export default StyleSheet.create({
@@ -10,13 +10,13 @@ export default StyleSheet.create({
 	image: {
 		flex: .2,
 		margin: 10,
-	    width: 500,
-	    height: 50,
-	    resizeMode: 'contain',
-	    backgroundColor: 'transparent',
+		width: 500,
+		height: 50,
+		resizeMode: 'contain',
+		backgroundColor: 'transparent',
 	},
 	text: {
 		flex: .8,
 		fontSize: 20,
-	}
-})
+	},
+});

@@ -17,7 +17,6 @@
   },
   "jest": {
     "preset": "jest-expo"
-    
   },
   "dependencies": {
     "expo": "^23.0.4",
