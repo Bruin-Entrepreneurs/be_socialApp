@@ -1,34 +1,37 @@
 import React from 'react';
 import { 
+	AsyncStorage,
 	Text,
 	View,
 } from 'react-native';
 import { 
 	Avatar, 
 } from 'react-native-elements'; 
-import { StackNavigator } from 'react-navigation';
+import { HeaderBackButton, StackNavigator } from 'react-navigation';
 
 import styles from './styles/UserProfileStyle';
 import Button from '../components/Button';
-import { imgURL } from '../../dummyData';
 
 export default class UserProfile extends React.Component {
-	static navigationOptions = {
-	    title: 'Profile',
-  	}
+	static navigationOptions = ({ navigation }) => ({
+	   headerLeft:  <HeaderBackButton
+	      onPress={this._handleLogOut}
+	      title='Log Out'
+	    />,
+	    title: 'Profile'
+	})
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: this.props.navigation.state.params.name,
-			token: this.props.navigation.state.params.token,
-			profile_pic_url: this.props.navigation.state.params.profile_pic_url,
-		};
+		}
 	}
 
 	componentDidMount() {
-		/*  TO DO:
-			fetch call to populate state */
+		['username', 'profile_pic_url', 'access_token', 'refresh_token']
+			.map(
+				val => this._getGlobalState(val)
+			)
 	}
 	 
 	render() {
@@ -43,13 +46,31 @@ export default class UserProfile extends React.Component {
 						source={{ uri: this.state.profile_pic_url}}
 					/>
 					<View style={styles.profileText}>
-						<Text style={styles.profileName}> {this.state.name} </Text>
+						<Text style={styles.profileName}> {this.state.username} </Text>
 					</View>
 					<Button half title='Change'/>
 				</View>
 				<Button full title="Make an Event" onPress={() => navigate('Profile')} />
-				<Button full title="See all Events" onPress={() => navigate('EventScreen')} />
+				<Button full title="See all Events" onPress={() => navigate('EventsScreen')} />
 			</View>
-		);
+		)
+	}
+
+	// NOT WORKING
+	_handleLogOut = async () => {
+		await AsyncStorage.clear()
+		navigate('Home', {loggedIn: false})
+  	}
+
+	_getGlobalState = (value) => {
+		const data = {}
+
+		AsyncStorage
+			.getItem(value)
+			.then((val) => {
+				data[value] = val
+		    	this.setState(data)
+			})
+			.catch((e) => console.log(e))
 	}
 }

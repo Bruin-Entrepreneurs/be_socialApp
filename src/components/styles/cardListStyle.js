@@ -8,15 +8,14 @@ export default StyleSheet.create({
 		alignItems: 'center',
 	},
 	image: {
-		flex: .2,
-		margin: 10,
-		width: 500,
-		height: 50,
+		// flex: 2,
+		width: 25,
+		height: 25,
 		resizeMode: 'contain',
 		backgroundColor: 'transparent',
 	},
 	text: {
-		flex: .8,
+		// flex: 8,
 		fontSize: 20,
 	},
 });
