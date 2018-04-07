@@ -6,7 +6,7 @@ import {
 import {
 	Avatar,
 } from 'react-native-elements'
-import { HeaderBackButton, StackNavigator } from 'react-navigation'
+import { HeaderBackButton } from 'react-navigation'
 
 import storage from '../globals/storage'
 import styles from './styles/UserProfileStyle'

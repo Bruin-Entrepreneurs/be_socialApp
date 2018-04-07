@@ -56,6 +56,7 @@ export default class HomeScreen extends React.Component {
 
 	_handlePressAsync = async () => {
 		let redirectUrl = AuthSession.getRedirectUrl()
+		console.log(redirectUrl)
 		let result = await AuthSession.startAsync({
 			authUrl:
 				`https://www.facebook.com/v2.12/dialog/oauth?response_type=token` +

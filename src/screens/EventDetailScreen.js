@@ -1,9 +1,14 @@
-import React from 'react';
-import { AsyncStorage, Text, View } from 'react-native';
+import React from 'react'
+import { AsyncStorage, Text, View } from 'react-native'
 
+import storage from '../globals/storage'
 import { BASE_URL_PROD } from '../globals/constants'
 
 export default class EventDetailScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Event Detail'
+    })
+
     constructor(props) {
         super(props)
         this.state = {
@@ -11,7 +16,9 @@ export default class EventDetailScreen extends React.Component {
     }
 
     componentDidMount() {
-        ['access_token'].map(val => this._getGlobalState(val))
+        const auth = storage.load({
+            key: 'auth',
+        }).then((auth) => this.setState({ auth: auth }, this._getEventAsync))
     }
 
     render() {
@@ -54,17 +61,5 @@ export default class EventDetailScreen extends React.Component {
         } else {
             console.log(eventResponse)
         }
-    }
-
-    _getGlobalState = (value) => {
-        const data = {}
-
-        AsyncStorage
-            .getItem(value)
-            .then((val) => {
-                data[value] = val
-                this.setState(data, this._getEventAsync)
-            })
-            .catch((e) => console.log(e))
     }
 }

@@ -1,21 +1,21 @@
-import React from 'react';
+import React from 'react'
 import {
 	Dimensions,
 	FlatList,
 	Text,
 	TextInput,
 	View,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
+} from 'react-native'
+import { StackNavigator } from 'react-navigation'
 import {
 	Avatar,
 	List,
 	ListItem,
-} from 'react-native-elements';
+} from 'react-native-elements'
 
 import storage from '../globals/storage'
-import Button from '../components/Button';
-import styles from './styles/InviteScreenStyle';
+import Button from '../components/Button'
+import styles from './styles/InviteScreenStyle'
 import { BASE_URL_PROD } from '../globals/constants'
 
 const moment = require('moment');
@@ -143,7 +143,7 @@ export default class InviteScreen extends React.Component {
 			start_time: this.props.navigation.state.params.startTime,
 			end_time: '',
 			super_invite_ids: this.state.selectedUsers.map((user) => user.id),
-			description: '' // ADD THIS IN 
+			description: this.props.navigation.state.params.description
 		}
 
 		let eventCreationResponse = await fetch(
@@ -158,7 +158,7 @@ export default class InviteScreen extends React.Component {
 				}
 			}
 		)
-		console.log(eventCreationResponse)
+
 		const eventCreationJson = await eventCreationResponse.json()
 
 		if (eventCreationResponse.ok) {

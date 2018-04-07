@@ -1,11 +1,20 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { HeaderBackButton } from 'react-navigation'
 
 import storage from '../globals/storage'
 import EventList from '../components/EventList'
 import { BASE_URL_PROD } from '../globals/constants'
 
 export default class EventsScreen extends React.Component {
+	static navigationOptions = ({ navigation }) => ({
+		headerLeft: <HeaderBackButton
+			onPress={this._handleBack}
+			title='Profile'
+		/>,
+		title: 'Events'
+	})
+
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -59,5 +68,11 @@ export default class EventsScreen extends React.Component {
 		} else {
 			console.log(eventsResponse)
 		}
+	}
+
+	// NOT WORKING
+	_handleBack = async () => {
+		const { navigate } = this.props.navigation
+		navigate('Profile')
 	}
 }
