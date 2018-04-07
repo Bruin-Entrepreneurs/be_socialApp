@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { NAVY } from '../../constants/styles';
+import { NAVY } from '../../globals/styles';
 
 export default StyleSheet.create({
 	eventContainer: {

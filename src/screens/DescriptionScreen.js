@@ -1,38 +1,43 @@
 import React from 'react'
 import {
-	AsyncStorage,
 	Image,
 	Picker,
 	Text,
+	TextInput,
 	View,
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+
+import storage from '../globals/storage'
 import Button from '../components/Button'
 import styles from './styles/CreationScreenStyle'
-import { BASE_URL_PROD } from '../constants/constants'
+import { BASE_URL_PROD } from '../globals/constants'
 
 const moment = require('moment');
 const idLocale = require('moment/locale/id');
 moment.locale('id', idLocale);
 
-export default class CreationScreen extends React.Component {
+export default class DescriptionScreen extends React.Component {
 	static navigationOptions = {
-		title: 'Step 1',
+		title: 'Step 2: Description',
 	}
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			chosenDate: new Date(),
 			picker: false,
-			pickerVal: '',
+			pickerVal: 0,
+			description: '',
 		}
-
 		this.updateDatePicker = this.updateDatePicker.bind(this);
 	}
 
-	async componentDidMount() {
-		['access_token', 'refresh_token'].map(val => this._getGlobalState(val))
+	componentDidMount() {
+		const auth = storage.load({
+			key: 'auth',
+		}).then(
+			(auth) => this.setState({ auth: auth }, this._getEventTypesAsync)
+		)
 	}
 
 	updateDatePicker() {
@@ -60,9 +65,7 @@ export default class CreationScreen extends React.Component {
 
 		return (
 			<View style={styles.eventContainer}>
-				<Text style={styles.creationTitleText}>Create Event</Text>
-				<Text style={styles.creationSubText}>Time</Text>
-				<Button full title="date" onPress={() => { }} />
+				<Text style={styles.creationTitleText}>Describe Event</Text>
 				<Text style={styles.creationSubText}> Type </Text>
 
 				<View>
@@ -92,12 +95,21 @@ export default class CreationScreen extends React.Component {
 					}
 				</View>
 
+				<Text style={styles.creationSubText}> Description </Text>
+				<TextInput
+					placeholder='Enter Description'
+					onChangeText={(text) => this.setState({ description: text })}
+					multiline={true}
+					numberOfLines={5}
+				/>
+
 				<Button
 					title="Next"
 					onPress={
 						() => navigate('Invite', {
-							time: this.state.chosenDate,
+							startTime: this.props.navigation.state.params.startTime,
 							eventType: this.state.pickerVal,
+							description: this.state.description
 						}
 						)
 					}
@@ -114,35 +126,23 @@ export default class CreationScreen extends React.Component {
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + this.state.access_token
+					Authorization: 'Bearer ' + this.state.auth.access_token
 				}
 			}
 		)
 
 		const eventTypesJson = await eventTypesResponse.json()
-		console.log(JSON.stringify(eventTypesResponse, null, 2))
-		console.log('here')
+
 		if (eventTypesResponse.ok) {
-			console.log('here 2')
-			console.log(eventTypesJson)
 			this.setState({
 				eventTypes: eventTypesJson
 			})
+			// Set initial state for picker value
+			this.setState({
+				pickerVal: eventTypesJson[0].id
+			})
 		} else {
-			console.log('here 3')
 			console.log(eventTypesResponse)
 		}
-	}
-
-	_getGlobalState = (value) => {
-		const data = {}
-
-		AsyncStorage
-			.getItem(value)
-			.then((val) => {
-				data[value] = val
-				this.setState(data, this._getEventTypesAsync)
-			})
-			.catch((e) => console.log(e))
 	}
 }

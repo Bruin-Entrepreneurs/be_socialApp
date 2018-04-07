@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-native-elements'; 
+import { Card } from 'react-native-elements';
 import {
 	Image,
 	ListView,
@@ -11,23 +11,22 @@ import {
 
 import styles from './styles/cardListStyle'
 
-const EventList = ({events, navigate}) => {
-	console.log('2')
-	console.log(navigate)
+const EventList = ({ events, navigate }) => {
 	return (
 		<Card>
 			{events.map((event, i) => {
 				return (
-					<TouchableHighlight onPress={() => navigate('EventDetailScreen', {id:event.id})} underlayColor="white">
+					<TouchableHighlight onPress={() => navigate('EventDetail', { id: event.id })} underlayColor="white">
 						<View key={i} style={styles.eventContainer}>
 							<Image
 								style={styles.image}
-								source={{uri: event.event_type.image_url}}
+								source={{ uri: event.event_type.image_url }}
 							/>
 							<Text style={styles.text}>{event.event_type.name} at {event.start_time}</Text>
 						</View>
 					</TouchableHighlight>
-				)}
+				)
+			}
 			)}
 		</Card>
 	)

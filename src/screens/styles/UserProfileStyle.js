@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { NAVY } from '../../constants/styles';
+import { NAVY } from '../../globals/styles';
 
 export default StyleSheet.create({
 	screenContainer: {
@@ -34,7 +34,7 @@ export default StyleSheet.create({
 	profileButton: {
 		flex: .2,
 	},
-	buttonContainer: {		
+	buttonContainer: {
 		flex: .2,
 		display: 'flex',
 		alignItems: 'center',
