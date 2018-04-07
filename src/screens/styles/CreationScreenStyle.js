@@ -17,7 +17,7 @@ export default StyleSheet.create({
 	eventContainer: {
 			flex: 1,
 			display: 'flex',
-    	flexWrap: 'wrap',
+    		flexWrap: 'wrap',
 			backgroundColor: '#fff',
 	},
 });

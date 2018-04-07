@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { NAVY, CREAM } from '../../constants/styles';
+import { NAVY, CREAM } from '../../globals/styles';
 
 export default StyleSheet.create({
 	full: {

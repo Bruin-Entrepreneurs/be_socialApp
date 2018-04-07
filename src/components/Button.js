@@ -7,7 +7,7 @@ import {
 
 import styles from './styles/buttonStyle';
 
-const Button = ({title, onPress, full, half, center}) => {
+const Button = ({ title, onPress, full, half, center }) => {
 	const containerStyles = [styles.full];	//k is a list of styles for the outer <View>
 
 	if (half) {
