@@ -13,13 +13,12 @@ const EventView = ({ title, desc, start_time, end_time, superlike }) => {
 			<Text style={styles.description}>{desc}</Text>
 			<View style={styles.dateContainer}>
 				<Text style={styles.date}>Start: {"\n"}
-				{start_time.match('\T(.*?)\Z')[1].slice(0,5)} on {start_time.match('\-(.*?)\T')[1]}</Text>
+					{start_time.match('\T(.*?)\Z')[1].slice(0,5)} on {start_time.match('\-(.*?)\T')[1]}</Text>
 				<Text style={styles.date}>End: {"\n"}
-				{end_time.match('\T(.*?)\Z')[1].slice(0,5)} on {end_time.match('\-(.*?)\T')[1]}</Text>
+					{end_time.match('\T(.*?)\Z')[1].slice(0,5)} on {end_time.match('\-(.*?)\T')[1]}</Text>
 			</View>
 		</View>
 	)
 }
 
 export default EventView;
-
