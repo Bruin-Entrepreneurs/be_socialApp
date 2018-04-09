@@ -8,17 +8,19 @@ import { BASE_URL_PROD } from '../globals/constants'
 
 export default class EventsScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
-		headerLeft: <HeaderBackButton
-			onPress={this._handleBack}
-			title='Profile'
-		/>,
 		title: 'Events'
+
 	})
 
 	constructor(props) {
 		super(props)
 		this.state = {
+			events: false,
+			auth: false,
+			err: false,
 		}
+		this._getEventsAsync = this._getEventsAsync.bind(this);		
+
 	}
 
 	componentDidMount() {
@@ -30,7 +32,8 @@ export default class EventsScreen extends React.Component {
 	}
 
 	render() {
-		const { navigate } = this.props.navigation
+		const { navigate } = this.props.navigation;
+
 		return (
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				{
@@ -39,9 +42,10 @@ export default class EventsScreen extends React.Component {
 							<EventList events={this.state.events} navigate={navigate} />
 						</View>
 					) : (
-							<Text> Loading </Text>
+							<Text>Loading</Text>
 						)
 				}
+				{this.state.err && <Text>Error: {this.state.err}</Text>}
 			</View>
 		)
 	}
@@ -62,17 +66,21 @@ export default class EventsScreen extends React.Component {
 		const eventsJson = await eventsResponse.json()
 
 		if (eventsResponse.ok) {
-			this.setState({
-				events: eventsJson
-			})
+			this.setState(prevState => {
+				return Object.assign({}, prevState, 
+					{
+						events: eventsJson,
+					}
+				);
+			});
 		} else {
-			console.log(eventsResponse)
+			this.setState(prevState => {
+				return Object.assign({}, prevState, 
+					{
+						err: eventsResponse.statusCode,
+					}
+				);
+			});
 		}
-	}
-
-	// NOT WORKING
-	_handleBack = async () => {
-		const { navigate } = this.props.navigation
-		navigate('Profile')
 	}
 }

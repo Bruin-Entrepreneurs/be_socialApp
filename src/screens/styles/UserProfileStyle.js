@@ -17,6 +17,13 @@ export default StyleSheet.create({
 	profilePicture: {
 		flex: .5,
 		backgroundColor: 'transparent',
+		shadowColor: "#000000",
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		shadowOffset: {
+			height: 5,
+			width: 2
+		}
 	},
 	profileText: {
 		flex: .2,

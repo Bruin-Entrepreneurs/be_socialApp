@@ -52,6 +52,5 @@ export default StyleSheet.create({
 	},
 	logoContainer: {
 		flex: 0.6,
-		backgroundColor: CREAM,
 	}
 });

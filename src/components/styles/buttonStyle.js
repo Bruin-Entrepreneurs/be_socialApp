@@ -24,6 +24,13 @@ export default StyleSheet.create({
 		display: 'flex',
 		justifyContent: 'center',
 		width: '75%',
+		shadowColor: "#000000",
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		shadowOffset: {
+			height: 3,
+			width: 2
+		}
 	},
 	text: {
 		fontSize: 17,

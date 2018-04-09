@@ -11,9 +11,10 @@ import {
 import { StackNavigator } from 'react-navigation'
 
 import storage from '../globals/storage'
-import Button from '../components/Button'
-import logo from '../../assets/BE.png'
-import styles from './styles/HomeScreenStyle'
+import Button from '../components/Button';
+import logo from '../../assets/BE.png';
+import styles from './styles/HomeScreenStyle';
+import { CREAM } from '../globals/styles';
 
 const { height } = Dimensions.get('window')
 
@@ -22,6 +23,7 @@ export default class HomeScreen extends React.Component {
 		super(props);
 		this.state = {
 		}
+		this._handlePressAsync = this._handlePressAsync.bind(this);
 	}
 
 	render() {
@@ -31,7 +33,8 @@ export default class HomeScreen extends React.Component {
 			<View
 				style={{
 					flexDirection: 'column',
-					height: height,
+					height: '100%',
+					backgroundColor: CREAM,
 				}}>
 				<View style={styles.logoContainer}>
 					<Image source={logo} style={styles.picture} />
@@ -45,7 +48,7 @@ export default class HomeScreen extends React.Component {
 								<Button title="FB Login" onPress={this._handlePressAsync} />
 							) : (
 									navigate('UserProfile')
-								)
+							)
 						}
 					</View>
 				</View>
@@ -90,7 +93,7 @@ export default class HomeScreen extends React.Component {
 		)
 
 		const authResponseJson = await authResponse.json()
-
+		console.log(authResponseJson)
 		storage.save({
 			key: 'auth',
 			data: authResponseJson.token,
