@@ -79,11 +79,10 @@ export default class TimeSelectScreen extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation
-
         return (
             <View style={styles.eventContainer}>
                 <Text style={styles.creationTitleText}>Select Time</Text>
-                <Text style={styles.creationSubText}>Start Time</Text>
+                <Text style={styles.creationSubText}>Start Time: </Text>
                 <Button full title="date" onPress={this.showStartDateTimePicker} />
                 <DateTimePicker 
                     isVisible={this.state.isDateTimePickerVisible}
@@ -98,7 +97,7 @@ export default class TimeSelectScreen extends React.Component {
                     title="Next"
                     onPress={
                         () => navigate('Description', { startTime: this.state.chosenStartDate,
-                                                        endTime: this.state.chosenEndDates, })
+                                                        endTime: this.state.chosenEndDate, })
                     }
                 />
             </View>

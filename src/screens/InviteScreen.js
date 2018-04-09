@@ -4,7 +4,10 @@ import {
 	FlatList,
 	Text,
 	TextInput,
+	ScrollView,
+	Image,
 	View,
+	TouchableOpacity,
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import {
@@ -13,7 +16,7 @@ import {
 	ListItem,
 } from 'react-native-elements'
 
-
+import ScrollColumns from '../components/scrollColumns'
 import storage from '../globals/storage'
 import Button from '../components/Button'
 import styles from './styles/InviteScreenStyle'
@@ -46,58 +49,84 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const startMoment = moment(this.props.navigation.state.params.startTime).format("MM/DD/YYYY")
-		const endMoment = moment(this.props.navigation.state.params.endTime).format("MM/DD/YYYY")
+		const startMoment = moment(this.props.navigation.state.params.startTime).format("HH:MM MM/DD")
+		const endMoment = moment(this.props.navigation.state.params.endTime).format("HH:MM MM/DD")
 		const { navigate } = this.props.navigation
 
 		return (
 			<View style={styles.container} >
-				<Text style={styles.creationSubText}> Time</Text>
-				<Text style={styles.creationSubText}> {startMoment} </Text>
-				<Text style={styles.creationSubText}> {endMoment} </Text>
-				<Text style={styles.creationSubText}> {this.props.navigation.state.params.eventType} </Text>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+					<Text style={styles.creationSubText}> Start Time:  </Text>
+					<Text style={styles.creationSubText}> {startMoment} </Text>
+				</View>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+					<Text style={styles.creationSubText}> End Time:  </Text>
+					<Text style={styles.creationSubText}> {endMoment} </Text>
+				</View>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+					<Text style={styles.creationSubText}> Event Type:  </Text>
+					<Text style={styles.creationSubText}> {this.props.navigation.state.params.eventType} </Text>
+				</View>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 80 }}>
+					<Text style={styles.creationSubText}> Description: </Text>
+					<Text style={styles.nameSubText}> {this.props.navigation.state.params.description} </Text>
+				</View>
 				<TextInput
 					style={{ height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}
 					placeholder='Enter Name'
 					onChangeText={(text) => this.setState({ searchInput: text })}
 				/>
-
-				<View>
+				<View style={{ height: 150, flex: 1, flexDirection: 'row', paddingLeft: 10 }}>
 					{
 						!this.state.unselectedUsers ? (
 							<Text> Loading </Text>
 						) : (
-								<List containerStyle={{ marginBottom: 20, width: 200 }}>
-									{
+								<ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
+								{
 										this.state.unselectedUsers
 											.filter((user) => user.username.toLowerCase().includes(this.state.searchInput.toLowerCase()))
 											.map(
 												(user) => (
-													<ListItem
-														key={user.id}
-														title={user.first_name}
-														onPress={(user) => this._handleSelectUserUserAsync(user)}
-													/>
+													<TouchableOpacity onPress={() => this._handleSelectUserUserAsync(user)}>
+													<View style={{ flex: 1, flexDirection: 'row' }}>
+														<Avatar medium rounded
+														containerStyle={{ marginTop: 5 }}
+														overlayContainerStyle={{ backgroundColor: 'transparent' }}
+														source={{ uri: user.profile_pic_url }}
+														/>
+														<Text style={styles.nameSubText}>
+															{user.username}
+														</Text>
+													</View>
+													</TouchableOpacity>
 												)
 											)
 									}
-								</List>
+								</ScrollView>
 							)
 					}
-				</View>
 
 
-				<List containerStyle={{ marginBottom: 20, width: 200 }}>
-					{
-						this.state.selectedUsers.map((user, i) => (
-							<ListItem
-								key={i}
-								title={user.first_name}
-							/>
-						))
-					}
-				</List>
-
+				
+					<ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
+						{
+							this.state.selectedUsers
+							.map((user) => (
+								<View style={{ flex: 1, flexDirection: 'row' }}>
+									<Avatar medium rounded
+									containerStyle={{ marginTop: 5 }}
+									overlayContainerStyle={{ backgroundColor: 'transparent' }}
+									source={{ uri: !user ? '' : user.profile_pic_url }}
+									/>
+									<Text style={styles.nameSubText}>
+										{user.username}
+									</Text>
+								</View>
+								))
+						}
+					</ScrollView>
+				
+			</View>
 				<Button full title="Chill!" onPress={this._handleEventCreationAsync} />
 			</View>
 		)
@@ -106,11 +135,13 @@ export default class InviteScreen extends React.Component {
 	_handleSelectUserUserAsync = async (user) => {
 		// THIS DOESNT WORK RN SO ITS COMMENTED
 		// Add selected user
-		// this.setState({ selectedUsers: [...this.state.selectedUsers, user], }, () => console.log(this.state))
-
-		// Remove selected user from list
+		console.log("hello")
+		this.setState( prevState => ({
+			selectedUsers: [...prevState.selectedUsers, user]
+		}));		// Remove selected user from list
 		var array = this.state.unselectedUsers
-		var index = array.indexOf(user.target.value)
+		var index = array.indexOf(user)
+
 		array.splice(index, 1)
 		this.setState({ unselectedUsers: array })
 	}
@@ -171,3 +202,83 @@ export default class InviteScreen extends React.Component {
 		}
 	}
 }
+/*
+
+
+
+<FlatList 
+										data={this.state.unselectedUsers}
+										renderItem={() => (
+											this.state.unselectedUsers
+											.filter((user) => user.username.toLowerCase().includes(this.state.searchInput.toLowerCase()))
+											.map(
+												(user) => (
+													<ListItem 
+														key={user.id}
+														title={user.first_name}
+														onPress={(user) => this._handleSelectUserUserAsync(user)}
+													/>
+												)
+											)
+										)}
+									/>
+
+									*/
+
+
+/*
+
+<View style={{ height: 150, flex: 1, flexDirection: 'row', paddingLeft: 10 }}>
+					{
+						!this.state.unselectedUsers ? (
+							<Text> Loading </Text>
+						) : (
+								<ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
+								{
+										this.state.unselectedUsers
+											.filter((user) => user.username.toLowerCase().includes(this.state.searchInput.toLowerCase()))
+											.map(
+												(user) => (
+													<TouchableOpacity onPress={() => this._handleSelectUserUserAsync(user)}>
+													<View style={{ flex: 1, flexDirection: 'row' }}>
+														<Avatar medium rounded
+														containerStyle={{ marginTop: 5 }}
+														overlayContainerStyle={{ backgroundColor: 'transparent' }}
+														source={{ uri: user.profile_pic_url }}
+														/>
+														<Text style={styles.nameSubText}>
+															{user.username}
+														</Text>
+													</View>
+													</TouchableOpacity>
+												)
+											)
+									}
+								</ScrollView>
+							)
+					}
+
+
+				
+					<ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
+						{
+							this.state.selectedUsers
+							.map((user) => (
+								<View style={{ flex: 1, flexDirection: 'row' }}>
+									<Avatar medium rounded
+									containerStyle={{ marginTop: 5 }}
+									overlayContainerStyle={{ backgroundColor: 'transparent' }}
+									source={{ uri: !user ? '' : user.profile_pic_url }}
+									/>
+									<Text style={styles.nameSubText}>
+										{user.username}
+									</Text>
+								</View>
+								))
+						}
+					</ScrollView>
+				
+			</View>
+			*/
+
+
