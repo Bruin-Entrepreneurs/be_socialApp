@@ -13,6 +13,7 @@ import {
 	ListItem,
 } from 'react-native-elements'
 
+
 import storage from '../globals/storage'
 import Button from '../components/Button'
 import styles from './styles/InviteScreenStyle'
@@ -45,13 +46,15 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const curMoment = moment(this.props.navigation.state.params.startTime).format("MM/DD/YYYY")
+		const startMoment = moment(this.props.navigation.state.params.startTime).format("MM/DD/YYYY")
+		const endMoment = moment(this.props.navigation.state.params.endTime).format("MM/DD/YYYY")
 		const { navigate } = this.props.navigation
 
 		return (
 			<View style={styles.container} >
 				<Text style={styles.creationSubText}> Time</Text>
-				<Text style={styles.creationSubText}> {curMoment} </Text>
+				<Text style={styles.creationSubText}> {startMoment} </Text>
+				<Text style={styles.creationSubText}> {endMoment} </Text>
 				<Text style={styles.creationSubText}> {this.props.navigation.state.params.eventType} </Text>
 				<TextInput
 					style={{ height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}
