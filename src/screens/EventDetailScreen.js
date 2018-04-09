@@ -8,23 +8,27 @@ import EventView from '../components/EventView';
 import styles from './styles/EventDetailScreen';
 
 export default class EventDetailScreen extends React.Component {
-	static navigationOptions = ({ navigation }) => ({
-		title: 'Event Detail'
-	})
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Event Detail'
+    })
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			event: false,
-			superlike: false,
-			responded: false,
-			err: false,
-		}
+    constructor(props) {
+        super(props)
+        this.state = {
+            event: false,
+            superInvited: false,
+            responded: false,
+            err: false,
+        }
 
-		this._getEventAsync = this._getEventAsync.bind(this);
-	}
+        this._getEventAsync = this._getEventAsync.bind(this);
+    }
 
 	componentDidMount() {
+    const user = storage.load({
+			key: 'user',
+		}).then((user) => this.setState({ user: user }))
+    
 		const auth = storage.load({
 			key: 'auth',
 		}).then(
@@ -36,9 +40,6 @@ export default class EventDetailScreen extends React.Component {
 				);
 			}, this._getEventAsync)
 		)
-		const user = storage.load({
-			key: 'user',
-		}).then((user) => this.setState({ user: user }))
 	}
 
 	render() {
@@ -50,7 +51,7 @@ export default class EventDetailScreen extends React.Component {
 				{
 					this.state.event ? (
 						<View style={{ flex: 1 }}>
-								<EventView superlike={this.state.superlike} title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
+								<EventView superlike={this.state.superInvited} title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
 								{!this.state.responded && <View style={styles.buttonContainer}>
 									<Button half title="Accept" />
 									<Button half title="Decline" />
@@ -58,7 +59,7 @@ export default class EventDetailScreen extends React.Component {
 							}
 						</View>
 					) : (
-						<Text>Loading Event</Text>
+						<Text> Loading Event </Text>
 					)
 				}
 				{this.state.err && <Text>Error: {this.state.err}</Text>}
@@ -66,40 +67,83 @@ export default class EventDetailScreen extends React.Component {
 		)
 	}
 
-	_getEventAsync = async () => {
-		const eventId = this.props.navigation.state.params.id;
-		const eventResponse = await fetch(
-			BASE_URL_PROD + '/event/' +  eventId,
-			{
-				method: 'GET',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + this.state.auth.access_token
-				}
-			}
-		);
+  
+    _getEventAsync = async () => {
+        const eventId = this.props.navigation.state.params.id;
+        const eventResponse = await fetch(
+            BASE_URL_PROD + '/event/' + eventId,
+            {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + this.state.auth.access_token
+                }
+            }
+        )
 
-		const eventJson = await eventResponse.json();
-		console.log(this.state.user)
-		if (eventResponse.ok) {
-			this.setState(prevState => {
-				return Object.assign({}, prevState, 
-					{
-						event: eventJson,
-						responded: (eventJson.accepted.includes(Number(prevState.user.id)) || eventJson.declined.includes(Number(prevState.user.id))),
-						superlike: (eventJson.super_invited.includes(Number(prevState.user.id))),
-					}
-				);
-			});
-		} else {
-			this.setState(prevState => {
-				return Object.assign({}, prevState, 
-					{
-						err: eventResponse.statusCode,
-					}
-				);
-			});
-		}
-	}
+        const eventJson = await eventResponse.json();
+
+        if (eventResponse.ok) {
+          this.setState(prevState => {
+            return Object.assign({}, prevState, 
+              {
+                event: eventJson,
+                responded: (eventJson.accepted.includes(Number(prevState.user.id)) || eventJson.declined.includes(Number(prevState.user.id))),
+                superInvited: (eventJson.super_invited.includes(Number(prevState.user.id))),
+              }
+            )
+          })
+        } else {
+          this.setState(prevState => {
+            return Object.assign({}, prevState, 
+              {
+                err: eventResponse.statusCode,
+              }
+            )
+          })
+        }
+    }
+
+    _handleAccept = async () => {
+        const eventId = this.props.navigation.state.params.id
+        const acceptResponse = await fetch(
+            BASE_URL_PROD + '/event/' + eventId + '/accept/',
+            {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + this.state.auth.access_token
+                }
+            }
+        )
+
+        if (acceptResponse.ok) {
+          
+        } else {
+          
+        }
+    }
+
+    _handleDecline = async () => {
+        const eventId = this.props.navigation.state.params.id
+        const declineResponse = await fetch(
+            BASE_URL_PROD + '/event/' + eventId + '/decline/',
+            {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + this.state.auth.access_token
+                }
+            }
+        )
+
+        if (declineResponse.ok) {
+          
+        } else {
+          
+        }
+    }
 }

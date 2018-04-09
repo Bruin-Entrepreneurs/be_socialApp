@@ -97,6 +97,7 @@ export default class DescriptionScreen extends React.Component {
 
 				<Text style={styles.creationSubText}> Description </Text>
 				<TextInput
+					style={{ paddingLeft: 5 }}
 					placeholder='Enter Description'
 					onChangeText={(text) => this.setState({ description: text })}
 					multiline={true}
