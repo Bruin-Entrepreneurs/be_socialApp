@@ -108,6 +108,7 @@ export default class DescriptionScreen extends React.Component {
 					onPress={
 						() => navigate('Invite', {
 							startTime: this.props.navigation.state.params.startTime,
+							endTime: this.props.navigation.state.params.endTime, 
 							eventType: this.state.pickerVal,
 							description: this.state.description
 						}

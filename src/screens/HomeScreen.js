@@ -1,5 +1,5 @@
-import React from 'react';
-import { AuthSession } from 'expo';
+import React from 'react'
+import { AuthSession, Permissions, Notifications } from 'expo'
 import { BASE_URL_PROD, FB_APP_ID } from '../globals/constants'
 import {
 	Dimensions,
@@ -7,15 +7,15 @@ import {
 	Text,
 	TextInput,
 	View,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
+} from 'react-native'
+import { StackNavigator } from 'react-navigation'
 
 import storage from '../globals/storage'
-import Button from '../components/Button';
-import logo from '../../assets/BE.png';
-import styles from './styles/HomeScreenStyle';
+import Button from '../components/Button'
+import logo from '../../assets/BE.png'
+import styles from './styles/HomeScreenStyle'
 
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get('window')
 
 export default class HomeScreen extends React.Component {
 	constructor(props) {
@@ -38,7 +38,6 @@ export default class HomeScreen extends React.Component {
 					<Text style={styles.titleText} >Hello BE!</Text>
 				</View>
 
-
 				<View style={{ backgroundColor: 'white', flex: 0.4 }}>
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 						{
@@ -55,23 +54,27 @@ export default class HomeScreen extends React.Component {
 	}
 
 	_handlePressAsync = async () => {
-		let redirectUrl = AuthSession.getRedirectUrl()
+		const redirectUrl = AuthSession.getRedirectUrl()
 		console.log(redirectUrl)
-		let result = await AuthSession.startAsync({
+		const result = await AuthSession.startAsync({
 			authUrl:
 				`https://www.facebook.com/v2.12/dialog/oauth?response_type=token` +
 				`&client_id=${FB_APP_ID}` +
 				`&redirect_uri=${encodeURIComponent(redirectUrl)}`,
 		})
 
+		if (result.type === 'error') {
+			console.log(result.errorCode)
+		}
 		if (result.type !== 'success') {
-			alert('Uh oh, something went wrong')
+			alert('Cannot login through Facebook')
 			return
 		}
 
-		let accessToken = result.params.access_token
+		const accessToken = result.params.access_token
+		const notificationToken = await this._registerForPushNotificationsAsync()
 
-		let authResponse = await fetch(
+		const authResponse = await fetch(
 			BASE_URL_PROD + '/user/fb_login',
 			{
 				method: 'POST',
@@ -80,7 +83,8 @@ export default class HomeScreen extends React.Component {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					'fb_token': accessToken
+					'fb_token': accessToken,
+					'notification_token': notificationToken
 				})
 			}
 		)
@@ -102,5 +106,31 @@ export default class HomeScreen extends React.Component {
 		this.setState({
 			auth: authResponseJson.token
 		})
+
+	}
+
+	_registerForPushNotificationsAsync = async () => {
+		const { status: existingStatus } = await Permissions.getAsync(
+			Permissions.NOTIFICATIONS
+		)
+		let finalStatus = existingStatus
+
+		// only ask if permissions have not already been determined, because
+		// iOS won't necessarily prompt the user a second time.
+		if (existingStatus !== 'granted') {
+			// Android remote notification permissions are granted during the app
+			// install, so this will only ask on iOS
+			const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+			finalStatus = status
+		}
+
+		// Stop here if the user did not grant permissions
+		if (finalStatus !== 'granted') {
+			return ''
+		}
+
+		// Get the token that uniquely identifies this device
+		const token = await Notifications.getExpoPushTokenAsync()
+		return token
 	}
 }
