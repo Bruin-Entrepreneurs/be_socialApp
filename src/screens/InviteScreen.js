@@ -28,7 +28,7 @@ moment.locale('id', idLocale);
 
 export default class InviteScreen extends React.Component {
 	static navigationOptions = {
-		title: 'Step 2: Super Invite',
+		title: 'Step 3: Super Invite',
 	}
 
 	constructor(props) {
