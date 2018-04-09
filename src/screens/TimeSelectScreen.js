@@ -6,6 +6,7 @@ import {
     View,
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+import  DateTimePicker  from 'react-native-modal-datetime-picker';
 
 import storage from '../globals/storage'
 import Button from '../components/Button'
@@ -24,7 +25,11 @@ export default class TimeSelectScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            chosenDate: new Date(),
+            chosenStartDate: new Date(),
+            chosenEndDate: new Date(),
+            isDateTimePickerVisible: false, 
+            startTimeChosen: false,
+            endTimeChosen: false
         }
     }
 
@@ -35,6 +40,42 @@ export default class TimeSelectScreen extends React.Component {
             (auth) => this.setState({ auth: auth })
         )
     }
+    showStartDateTimePicker = () =>
+        this.setState({ 
+            isDateTimePickerVisible: true,
+            startTimeChosen: true, 
+        });
+
+    showEndDateTimePicker = () => 
+        this.setState({
+            isDateTimePickerVisible: true,
+            endTimeChosen: true,
+        })
+    
+    hideDateTimePicker = () =>
+        this.setState({ 
+            isDateTimePickerVisible: false,
+            startTimeChosen: false,
+            endTimeChosen: false, 
+
+        }); 
+
+    handleTimePicked = (date) =>{
+        if (this.state.startTimeChosen)
+            this.setState({
+                chosenStartDate: date,
+            });
+        if (this.state.endTimeChosen) 
+            this.setState({
+                chosenEndDate: date,
+            });
+        this.setState({
+            isDateTimePickerVisible: false,
+            startTimeChosen: false,
+            endTimeChosen: false,
+        }); 
+    }
+   
 
     render() {
         const { navigate } = this.props.navigation
@@ -42,12 +83,22 @@ export default class TimeSelectScreen extends React.Component {
         return (
             <View style={styles.eventContainer}>
                 <Text style={styles.creationTitleText}>Select Time</Text>
-                <Text style={styles.creationSubText}>Time</Text>
-                <Button full title="date" onPress={() => { }} />
+                <Text style={styles.creationSubText}>Start Time</Text>
+                <Button full title="date" onPress={this.showStartDateTimePicker} />
+                <DateTimePicker 
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this.handleTimePicked}
+                    onCancel={this.hideDateTimePicker}
+                    mode='datetime'
+                />
+                <Text style={styles.creationSubText}> End Time </Text>
+                <Button full title="date" onPress={this.showEndDateTimePicker} />
+
                 <Button
                     title="Next"
                     onPress={
-                        () => navigate('Description', { startTime: this.state.chosenDate, })
+                        () => navigate('Description', { startTime: this.state.chosenStartDate,
+                                                        endTime: this.state.chosenEndDates, })
                     }
                 />
             </View>
