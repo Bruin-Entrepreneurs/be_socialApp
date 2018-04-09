@@ -13,12 +13,17 @@ export default class EventsScreen extends React.Component {
 			title='Profile'
 		/>,
 		title: 'Events'
+
 	})
 
 	constructor(props) {
 		super(props)
 		this.state = {
+			events: [],
+			auth: false,
 		}
+		this._getEventsAsync = this._getEventsAsync.bind(this);		
+
 	}
 
 	componentDidMount() {
@@ -30,7 +35,8 @@ export default class EventsScreen extends React.Component {
 	}
 
 	render() {
-		const { navigate } = this.props.navigation
+		const { navigate } = this.props.navigation;
+
 		return (
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				{
@@ -39,7 +45,7 @@ export default class EventsScreen extends React.Component {
 							<EventList events={this.state.events} navigate={navigate} />
 						</View>
 					) : (
-							<Text> Loading </Text>
+							<Text>Loading</Text>
 						)
 				}
 			</View>
@@ -65,6 +71,7 @@ export default class EventsScreen extends React.Component {
 			this.setState({
 				events: eventsJson
 			})
+			console.log(this.state.events);
 		} else {
 			console.log(eventsResponse)
 		}

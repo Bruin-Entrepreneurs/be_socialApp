@@ -22,6 +22,7 @@ export default class HomeScreen extends React.Component {
 		super(props);
 		this.state = {
 		}
+		this._handlePressAsync = this._handlePressAsync.bind(this);
 	}
 
 	render() {
@@ -46,7 +47,7 @@ export default class HomeScreen extends React.Component {
 								<Button title="FB Login" onPress={this._handlePressAsync} />
 							) : (
 									navigate('UserProfile')
-								)
+							)
 						}
 					</View>
 				</View>
@@ -80,13 +81,14 @@ export default class HomeScreen extends React.Component {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					'fb_token': accessToken
+					'fb_token': accessToken,
+					'notification_token': '',
 				})
 			}
 		)
 
 		const authResponseJson = await authResponse.json()
-
+		console.log(authResponseJson)
 		storage.save({
 			key: 'auth',
 			data: authResponseJson.token,

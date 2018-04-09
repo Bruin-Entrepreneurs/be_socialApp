@@ -1,65 +1,100 @@
-import React from 'react'
-import { AsyncStorage, Text, View } from 'react-native'
+import React from 'react';
+import { AsyncStorage, Text, View } from 'react-native';
 
-import storage from '../globals/storage'
-import { BASE_URL_PROD } from '../globals/constants'
+import storage from '../globals/storage';
+import { BASE_URL_PROD } from '../globals/constants';
+import Button from '../components/Button';
+import EventView from '../components/EventView';
+import styles from './styles/EventDetailScreen';
 
 export default class EventDetailScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => ({
-        title: 'Event Detail'
-    })
+	static navigationOptions = ({ navigation }) => ({
+		title: 'Event Detail'
+	})
 
-    constructor(props) {
-        super(props)
-        this.state = {
-        }
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			event: false,
+			superlike: false,
+			responded: false,
+			err: false,
+		}
 
-    componentDidMount() {
-        const auth = storage.load({
-            key: 'auth',
-        }).then((auth) => this.setState({ auth: auth }, this._getEventAsync))
-    }
+		this._getEventAsync = this._getEventAsync.bind(this);
+	}
 
-    render() {
-        const { navigate } = this.props.navigation
+	componentDidMount() {
+		const auth = storage.load({
+			key: 'auth',
+		}).then(
+			(auth) => this.setState(prevState => {
+				return Object.assign({}, prevState, 
+					{
+						auth: auth,
+					}
+				);
+			}, this._getEventAsync)
+		)
+	}
 
-        return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                {
-                    this.state.event ? (
-                        <View style={{ flex: 1 }}>
-                        </View>
-                    ) : (
-                            <Text> Loading Event </Text>
-                        )
-                }
-            </View>
-        )
-    }
+	render() {
+		const { navigate } = this.props.navigation;
+		const eventType = this.state.event.event_type;
+		console.log(this.state.event)
+		return (
+			<View style={styles.container}>
+				{
+					this.state.event ? (
+						<View style={{ flex: 1 }}>
+								<EventView title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
+								{!this.state.responded && <View style={styles.buttonContainer}>
+									<Button half title="Accept" />
+									<Button half title="Decline" />
+								</View>
+							}
+						</View>
+					) : (
+						<Text>Loading Event</Text>
+					)
+				}
+				{this.state.err && <Text>Error: {this.state.err}</Text>}
+			</View>
+		)
+	}
 
-    _getEventAsync = async () => {
-        const eventId = this.props.navigation.state.params.id
-        let eventResponse = await fetch(
-            BASE_URL_PROD + '/event/' + eventId,
-            {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + this.state.access_token
-                }
-            }
-        )
+	_getEventAsync = async () => {
+		const eventId = this.props.navigation.state.params.id;
+		const eventResponse = await fetch(
+			BASE_URL_PROD + '/event/' +  eventId,
+			{
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + this.state.auth.access_token
+				}
+			}
+		);
 
-        const eventJson = await eventResponse.json()
+		const eventJson = await eventResponse.json();
 
-        if (eventResponse.ok) {
-            this.setState({
-                event: eventJson
-            })
-        } else {
-            console.log(eventResponse)
-        }
-    }
+		if (eventResponse.ok) {
+			this.setState(prevState => {
+				return Object.assign({}, prevState, 
+					{
+						event: eventJson,
+					}
+				);
+			});
+		} else {
+			this.setState(prevState => {
+				return Object.assign({}, prevState, 
+					{
+						err: eventResponse.statusCode,
+					}
+				);
+			});
+		}
+	}
 }
