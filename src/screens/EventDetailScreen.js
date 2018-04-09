@@ -36,18 +36,21 @@ export default class EventDetailScreen extends React.Component {
 				);
 			}, this._getEventAsync)
 		)
+		const user = storage.load({
+			key: 'user',
+		}).then((user) => this.setState({ user: user }))
 	}
 
 	render() {
 		const { navigate } = this.props.navigation;
 		const eventType = this.state.event.event_type;
-		console.log(this.state.event)
+
 		return (
 			<View style={styles.container}>
 				{
 					this.state.event ? (
 						<View style={{ flex: 1 }}>
-								<EventView title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
+								<EventView superlike={this.state.superlike} title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
 								{!this.state.responded && <View style={styles.buttonContainer}>
 									<Button half title="Accept" />
 									<Button half title="Decline" />
@@ -78,12 +81,14 @@ export default class EventDetailScreen extends React.Component {
 		);
 
 		const eventJson = await eventResponse.json();
-
+		console.log(this.state.user)
 		if (eventResponse.ok) {
 			this.setState(prevState => {
 				return Object.assign({}, prevState, 
 					{
 						event: eventJson,
+						responded: (eventJson.accepted.includes(Number(prevState.user.id)) || eventJson.declined.includes(Number(prevState.user.id))),
+						superlike: (eventJson.super_invited.includes(Number(prevState.user.id))),
 					}
 				);
 			});

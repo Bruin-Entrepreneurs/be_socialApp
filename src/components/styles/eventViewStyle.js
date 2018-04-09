@@ -1,14 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-	buttonContainer: {
-		display: 'flex',
-		flexDirection: 'row',
-	},
 	descriptionContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	title: {
@@ -32,6 +27,14 @@ export default StyleSheet.create({
 		fontSize: 15,
 		flex: 1,
 		textAlign: 'center',
+	},
+	image: {
+		width: 25,
+		height: 25,
+		overflow: 'visible',
+		position: 'absolute',
+		alignSelf: 'flex-start',
+		margin: 8,
 	},
 });
 

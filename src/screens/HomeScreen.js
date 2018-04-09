@@ -22,6 +22,7 @@ export default class HomeScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			auth: false,
 		}
 		this._handlePressAsync = this._handlePressAsync.bind(this);
 	}
