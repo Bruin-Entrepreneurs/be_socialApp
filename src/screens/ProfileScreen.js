@@ -18,7 +18,12 @@ import Button from '../components/Button'
 export default class UserProfile extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
 		headerLeft: <HeaderBackButton
-			onPress={this._handleLogOut}
+			onPress={() => {
+				const { navigate } = navigation
+				storage.remove({ key: 'auth' })
+				storage.remove({ key: 'user' })
+				navigate('Home')
+			}}
 			title='Log Out'
 		/>,
 		title: 'Profile'
@@ -73,6 +78,7 @@ export default class UserProfile extends React.Component {
 
 	// NOT WORKING
 	_handleLogOut = async () => {
+		console.log('LOG OUT')
 		const { navigate } = this.props.navigation
 		storage.remove({ key: 'auth' })
 		storage.remove({ key: 'user' })

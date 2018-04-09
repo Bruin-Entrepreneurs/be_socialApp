@@ -27,8 +27,17 @@ export default class HomeScreen extends React.Component {
 		this._handlePressAsync = this._handlePressAsync.bind(this);
 	}
 
+	componentDidMount() {
+		const { navigate } = this.props.navigation
+
+		const auth = storage.load({
+			key: 'auth',
+		}).then((auth) => this.setState({ auth: auth }, () => navigate('Profile')))
+		.catch((e) => console.log('Not logged in'))
+	}
+
 	render() {
-		const { navigate } = this.props.navigation;
+		const { navigate } = this.props.navigation
 
 		return (
 			<View

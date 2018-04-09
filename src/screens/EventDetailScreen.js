@@ -25,7 +25,7 @@ export default class EventDetailScreen extends React.Component {
     }
 
 	componentDidMount() {
-    const user = storage.load({
+        const user = storage.load({
 			key: 'user',
 		}).then((user) => this.setState({ user: user }))
     
@@ -40,6 +40,9 @@ export default class EventDetailScreen extends React.Component {
 				);
 			}, this._getEventAsync)
 		)
+
+        alert(this.props.navigation.state.params.id)
+        alert(this.state)
 	}
 
 	render() {
