@@ -61,9 +61,9 @@ export default class EventsScreen extends React.Component {
 					Authorization: 'Bearer ' + this.state.auth.access_token
 				}
 			}
-		)
+		);
 
-		const eventsJson = await eventsResponse.json()
+		const eventsJson = await eventsResponse.json();
 
 		if (eventsResponse.ok) {
 			this.setState(prevState => {
