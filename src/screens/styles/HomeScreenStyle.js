@@ -10,6 +10,19 @@ export default StyleSheet.create({
 		alignSelf: 'center',
 		justifyContent: 'center',
 	},
+	creationSubText: {
+		fontSize: 25,
+		paddingTop: 20,
+		paddingLeft: 10,
+		fontWeight: 'bold',
+	},
+	creationTitleText: {
+		fontSize: 40,
+		fontWeight: 'bold',
+		alignSelf: 'center',
+		justifyContent: 'center',
+		paddingTop: 10,
+	},
 	eventContainer: {
 		flex: 1,
 		backgroundColor: '#fff',
@@ -39,6 +52,5 @@ export default StyleSheet.create({
 	},
 	logoContainer: {
 		flex: 0.6,
-		backgroundColor: CREAM,
 	}
 });

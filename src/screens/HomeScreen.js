@@ -14,6 +14,7 @@ import storage from '../globals/storage'
 import Button from '../components/Button';
 import logo from '../../assets/BE.png';
 import styles from './styles/HomeScreenStyle';
+import { CREAM } from '../globals/styles';
 
 const { height } = Dimensions.get('window');
 
@@ -32,7 +33,8 @@ export default class HomeScreen extends React.Component {
 			<View
 				style={{
 					flexDirection: 'column',
-					height: height,
+					height: '100%',
+					backgroundColor: CREAM,
 				}}>
 				<View style={styles.logoContainer}>
 					<Image source={logo} style={styles.picture} />
