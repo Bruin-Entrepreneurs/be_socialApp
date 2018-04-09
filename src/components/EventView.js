@@ -9,7 +9,6 @@ import STAR from '../globals/styles';
 import styles from './styles/eventViewStyle';
 
 const EventView = ({ title, desc, start_time, end_time, superlike }) => {
-	console.log(superlike)
 	return (
 		<View style={styles.descriptionContainer}>
 			<Text style={styles.title}>{title}</Text>
@@ -22,7 +21,7 @@ const EventView = ({ title, desc, start_time, end_time, superlike }) => {
 			</View>
 			{superlike && <Image 
 				style={styles.image}
-				source={{uri: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/star-icon.png'}}
+				source={{uri: STAR}}
 			/>}
 		</View>
 	)

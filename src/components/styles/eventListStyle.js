@@ -14,7 +14,6 @@ export default StyleSheet.create({
 		margin: 20,
 		marginTop: 40,
 		marginBottom: 40,
-		overflow: 'scroll',
 	},
 	image: {
 		width: 40,
