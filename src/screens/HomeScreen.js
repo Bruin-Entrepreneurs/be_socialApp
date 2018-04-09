@@ -82,7 +82,8 @@ export default class HomeScreen extends React.Component {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					'fb_token': accessToken
+					'fb_token': accessToken,
+					'notification_token': ''
 				})
 			}
 		)
