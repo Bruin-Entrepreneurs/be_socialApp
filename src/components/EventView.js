@@ -12,7 +12,7 @@ const EventView = ({ title, desc, start_time, end_time, superlike }) => {
 	return (
 		<View style={styles.descriptionContainer}>
 			<Text style={styles.title}>{title}</Text>
-			<Text style={styles.description}>{desc}</Text>
+			<Text style={styles.description}>Description: {desc}</Text>
 			<View style={styles.dateContainer}>
 				<Text style={styles.date}>Start: {"\n"}
 					{start_time.match('\T(.*?)\Z')[1].slice(0,5)} on {start_time.match('\-(.*?)\T')[1]}</Text>

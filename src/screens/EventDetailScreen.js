@@ -1,5 +1,6 @@
 import React from 'react';
 import { AsyncStorage, Text, View } from 'react-native';
+import { HeaderBackButton } from 'react-navigation'
 
 import storage from '../globals/storage';
 import { BASE_URL_PROD } from '../globals/constants';
@@ -9,6 +10,13 @@ import styles from './styles/EventDetailScreen';
 
 export default class EventDetailScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
+        headerLeft: <HeaderBackButton
+            onPress={() => {
+                const { navigate } = navigation
+                navigate('Events')
+            }}
+            title='Events'
+        />,
         title: 'Event Detail'
     })
 
@@ -40,9 +48,6 @@ export default class EventDetailScreen extends React.Component {
 				);
 			}, this._getEventAsync)
 		)
-
-        alert(this.props.navigation.state.params.id)
-        alert(this.state)
 	}
 
 	render() {
@@ -54,10 +59,16 @@ export default class EventDetailScreen extends React.Component {
 				{
 					this.state.event ? (
 						<View style={{ flex: 1 }}>
-								<EventView superlike={this.state.superInvited} title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
+								<EventView 
+                                    superlike={this.state.superInvited} 
+                                    title={eventType.name} 
+                                    desc={this.state.event.description} 
+                                    start_time={this.state.event.start_time} 
+                                    end_time={this.state.event.end_time} 
+                                />
 								{!this.state.responded && <View style={styles.buttonContainer}>
-									<Button half title="Accept" />
-									<Button half title="Decline" />
+									<Button half title="Accept" onPress={this._handleAccept}/>
+									<Button half title="Decline" onPress={this._handleDecline}/>
 								</View>
 							}
 						</View>
@@ -123,9 +134,9 @@ export default class EventDetailScreen extends React.Component {
         )
 
         if (acceptResponse.ok) {
-          
+            this.setState({ responded: true})
         } else {
-          
+            console.log(acceptResponse)
         }
     }
 
@@ -144,9 +155,9 @@ export default class EventDetailScreen extends React.Component {
         )
 
         if (declineResponse.ok) {
-          
+            this.setState({ responded: true})
         } else {
-          
+            console.log(declineResponse)
         }
     }
 }

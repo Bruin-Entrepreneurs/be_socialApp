@@ -8,13 +8,15 @@ import EventDetailScreen from './src/screens/EventDetailScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import InviteScreen from './src/screens/InviteScreen';
 import TimeSelectScreen from './src/screens/TimeSelectScreen';
-import UserProfile from './src/screens/ProfileScreen';
+import Profile from './src/screens/ProfileScreen';
+import EditProfile from './src/screens/EditProfileScreen';
 
 const App = StackNavigator({
 	Home: { screen: HomeScreen },
 	Description: { screen: DescriptionScreen },
 	Invite: { screen: InviteScreen },
-	UserProfile: { screen: UserProfile },
+	Profile: { screen: Profile },
+	EditProfile: { screen: EditProfile },
 	Events: { screen: EventsScreen },
 	EventDetail: { screen: EventDetailScreen },
 	TimeSelect: { screen: TimeSelectScreen },

@@ -49,18 +49,18 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const startMoment = moment(this.props.navigation.state.params.startTime).format("HH:MM MM/DD")
-		const endMoment = moment(this.props.navigation.state.params.endTime).format("HH:MM MM/DD")
+		const startMoment = this.props.navigation.state.params.startTime.toLocaleString()
+		const endMoment = this.props.navigation.state.params.startTime.toLocaleString()
 		const { navigate } = this.props.navigation
 
 		return (
 			<View style={styles.container} >
 				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
-					<Text style={styles.creationSubText}> Start Time:  </Text>
+					<Text style={styles.creationSubText}> Start:  </Text>
 					<Text style={styles.creationSubText}> {startMoment} </Text>
 				</View>
 				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
-					<Text style={styles.creationSubText}> End Time:  </Text>
+					<Text style={styles.creationSubText}> End:  </Text>
 					<Text style={styles.creationSubText}> {endMoment} </Text>
 				</View>
 				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
@@ -133,9 +133,6 @@ export default class InviteScreen extends React.Component {
 	}
 
 	_handleSelectUserUserAsync = async (user) => {
-		// THIS DOESNT WORK RN SO ITS COMMENTED
-		// Add selected user
-		console.log("hello")
 		this.setState( prevState => ({
 			selectedUsers: [...prevState.selectedUsers, user]
 		}));		// Remove selected user from list
@@ -175,7 +172,7 @@ export default class InviteScreen extends React.Component {
 		const data = {
 			event_type_id: this.props.navigation.state.params.eventType,
 			start_time: this.props.navigation.state.params.startTime,
-			end_time: '',
+			end_time: this.props.navigation.state.params.endTime,
 			super_invite_ids: this.state.selectedUsers.map((user) => user.id),
 			description: this.props.navigation.state.params.description
 		}
