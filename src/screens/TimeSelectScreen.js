@@ -81,11 +81,12 @@ export default class TimeSelectScreen extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation
+        const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
         return (
             <View style={styles.timeContainer}>
                 <Text style={styles.creationTitleText}>Select Time</Text>
                 <Text style={styles.creationSubText}>Start: </Text>
-                <Text style={styles.creationSubText}> {this.state.chosenStartDate.toLocaleString()} </Text>
+                <Text style={styles.creationSubText}> {this.state.chosenStartDate.toLocaleString('en-US', options)} </Text>
                 <Button full title="Choose Start" onPress={this.showStartDateTimePicker} />
                 <DateTimePicker 
                     isVisible={this.state.isDateTimePickerVisible}
@@ -94,7 +95,7 @@ export default class TimeSelectScreen extends React.Component {
                     mode='datetime'
                 />
                 <Text style={styles.creationSubText}> End: </Text>
-                <Text style={styles.creationSubText}> {this.state.chosenEndDate.toLocaleString()} </Text>
+                <Text style={styles.creationSubText}> {this.state.chosenEndDate.toLocaleString('en-US', options)} </Text>
                 <Button full title="Choose End" onPress={this.showEndDateTimePicker} />
                 <Button
                     title="Next"

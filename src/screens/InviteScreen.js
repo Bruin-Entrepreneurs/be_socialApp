@@ -50,21 +50,14 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const startMoment = this.props.navigation.state.params.startTime.toLocaleString()
-		const endMoment = this.props.navigation.state.params.startTime.toLocaleString()
+		const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+		const startMoment = this.props.navigation.state.params.startTime.toLocaleString('en-US', options)
+		const endMoment = this.props.navigation.state.params.endTime.toLocaleString('en-US', options)
 		const { navigate } = this.props.navigation
 
 		return (
 			<View style={styles.container} >
-// <<<<<<< HEAD
-// 				<EventView 
-// 				title={this.props.navigation.state.params.eventType} 
-// 				desc={this.props.navigation.state.params.description}
-// 				start_time={{startMoment}}
-// 				end_time={{endMoment}}
-// 				/>
-			   
-// =======
+
 				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
 					<Text style={styles.creationSubText}> Start:  </Text>
 					<Text style={styles.creationSubText}> {startMoment} </Text>
@@ -81,12 +74,12 @@ export default class InviteScreen extends React.Component {
 					<Text style={styles.creationSubText}> Description: </Text>
 					<Text style={styles.nameSubText}> {this.props.navigation.state.params.description} </Text>
 				</View>
-// >>>>>>> a3886c1a06bc59967ea0032937f025e6159081c6
 				<TextInput
 					style={{ height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}
 					placeholder='Enter Name'
 					onChangeText={(text) => this.setState({ searchInput: text })}
 				/>
+
 				<View style={{ height: 150, flex: 1, flexDirection: 'row', paddingLeft: 10 }}>
 					{
 						!this.state.unselectedUsers ? (
