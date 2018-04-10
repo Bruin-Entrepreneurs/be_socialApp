@@ -97,7 +97,7 @@ export default class EventDetailScreen extends React.Component {
         )
 
         const eventJson = await eventResponse.json();
-
+        
         if (eventResponse.ok) {
           this.setState(prevState => {
             return Object.assign({}, prevState, 

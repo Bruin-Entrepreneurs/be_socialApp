@@ -16,11 +16,12 @@ import {
 	ListItem,
 } from 'react-native-elements'
 
-import ScrollColumns from '../components/scrollColumns'
+//import ScrollColumns from '../components/scrollColumns'
 import storage from '../globals/storage'
 import Button from '../components/Button'
 import styles from './styles/InviteScreenStyle'
 import { BASE_URL_PROD } from '../globals/constants'
+import EventView from '../components/EventView'
 
 const moment = require('moment');
 const idLocale = require('moment/locale/id');
@@ -49,12 +50,14 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const startMoment = this.props.navigation.state.params.startTime.toLocaleString()
-		const endMoment = this.props.navigation.state.params.startTime.toLocaleString()
+		const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+		const startMoment = this.props.navigation.state.params.startTime.toLocaleString('en-US', options)
+		const endMoment = this.props.navigation.state.params.endTime.toLocaleString('en-US', options)
 		const { navigate } = this.props.navigation
 
 		return (
 			<View style={styles.container} >
+
 				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
 					<Text style={styles.creationSubText}> Start:  </Text>
 					<Text style={styles.creationSubText}> {startMoment} </Text>
@@ -76,6 +79,7 @@ export default class InviteScreen extends React.Component {
 					placeholder='Enter Name'
 					onChangeText={(text) => this.setState({ searchInput: text })}
 				/>
+
 				<View style={{ height: 150, flex: 1, flexDirection: 'row', paddingLeft: 10 }}>
 					{
 						!this.state.unselectedUsers ? (
