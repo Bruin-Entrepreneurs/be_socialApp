@@ -16,11 +16,12 @@ import {
 	ListItem,
 } from 'react-native-elements'
 
-import ScrollColumns from '../components/scrollColumns'
+//import ScrollColumns from '../components/scrollColumns'
 import storage from '../globals/storage'
 import Button from '../components/Button'
 import styles from './styles/InviteScreenStyle'
 import { BASE_URL_PROD } from '../globals/constants'
+import EventView from '../components/EventView'
 
 const moment = require('moment');
 const idLocale = require('moment/locale/id');
@@ -55,22 +56,13 @@ export default class InviteScreen extends React.Component {
 
 		return (
 			<View style={styles.container} >
-				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
-					<Text style={styles.creationSubText}> Start Time:  </Text>
-					<Text style={styles.creationSubText}> {startMoment} </Text>
-				</View>
-				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
-					<Text style={styles.creationSubText}> End Time:  </Text>
-					<Text style={styles.creationSubText}> {endMoment} </Text>
-				</View>
-				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
-					<Text style={styles.creationSubText}> Event Type:  </Text>
-					<Text style={styles.creationSubText}> {this.props.navigation.state.params.eventType} </Text>
-				</View>
-				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 80 }}>
-					<Text style={styles.creationSubText}> Description: </Text>
-					<Text style={styles.nameSubText}> {this.props.navigation.state.params.description} </Text>
-				</View>
+				<EventView 
+				title={this.props.navigation.state.params.eventType} 
+				desc={this.props.navigation.state.params.description}
+				start_time={{startMoment}}
+				end_time={{endMoment}}
+				/>
+			   
 				<TextInput
 					style={{ height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}
 					placeholder='Enter Name'
