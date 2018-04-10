@@ -1,6 +1,7 @@
 import React from 'react'
 import {
 	Text,
+	TextInput,
 	View,
 } from 'react-native'
 import {
@@ -15,18 +16,9 @@ import storage from '../globals/storage'
 import styles from './styles/UserProfileStyle'
 import Button from '../components/Button'
 
-export default class Profile extends React.Component {
+export default class EditProfile extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
-		headerLeft: <HeaderBackButton
-			onPress={() => {
-				const { navigate } = navigation
-				storage.remove({ key: 'auth' })
-				storage.remove({ key: 'user' })
-				navigate('Home')
-			}}
-			title='Log Out'
-		/>,
-		title: 'Profile'
+		title: 'Edit Profile'
 	})
 
 	constructor(props) {
@@ -59,19 +51,27 @@ export default class Profile extends React.Component {
 						overlayContainerStyle={{ backgroundColor: 'transparent' }}
 						source={{ uri: !this.state.user ? '' : this.state.user.profile_pic_url }}
 					/>
+					<Text> Username </Text>
 					<View style={styles.profileText}>
 						<Text style={styles.profileName}> {!this.state.user ? '' : this.state.user.username} </Text>
 					</View>
-					<Button half title='Change' onPress={() => navigate('EditProfile')}/>
+					<Text> Bio </Text>
+					<TextInput
+						multiline={true}
+						numberOfLines={5}
+						style={{ paddingLeft: 10, paddingBottom: 10, textAlignVertical: 'top'}}
+						value={this.state.bio}
+						placeholder='Enter bio'
+						onChangeText={(text) => this.setState({ bio: text })}
+					/>
+					<Button half title='Save' onPress={this._handleSave}/>
 				</View>
-				<Button full title="Make An Event" onPress={() => navigate('TimeSelect')} />
-				<Button full title="See Upcoming Events" onPress={() => navigate('Events')} />
 			</View>
 		)
 	}
 
-	_handleNotification = (notification) => {
-		const { navigate } = this.props.navigation
-		navigate('EventDetail', { id: notification.data.id })
+	_handleSave = async () => {
+		console.log('saving')
 	}
+
 }

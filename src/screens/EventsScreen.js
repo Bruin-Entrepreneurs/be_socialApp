@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, ScrollView, View, } from 'react-native'
 import { HeaderBackButton } from 'react-navigation'
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 
 import storage from '../globals/storage'
 import EventList from '../components/EventList'
@@ -8,8 +9,17 @@ import { BASE_URL_PROD } from '../globals/constants'
 
 export default class EventsScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
+		headerLeft: <HeaderBackButton
+            onPress={() => {
+                const { navigate } = navigation
+                navigate('Profile')
+            }}
+            title='Profile'
+        />,
+        transitionConfig: () => ({
+	        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+	   }),
 		title: 'Events'
-
 	})
 
 	constructor(props) {
@@ -20,7 +30,6 @@ export default class EventsScreen extends React.Component {
 			err: false,
 		}
 		this._getEventsAsync = this._getEventsAsync.bind(this);		
-
 	}
 
 	componentDidMount() {
@@ -35,7 +44,11 @@ export default class EventsScreen extends React.Component {
 		const { navigate } = this.props.navigation;
 
 		return (
-			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+			<ScrollView 
+				// style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+				horizontal={false} 
+				alwaysBounceHorizontal={false}
+				>
 				{
 					this.state.events ? (
 						<View style={{ flex: 1 }}>
@@ -46,7 +59,7 @@ export default class EventsScreen extends React.Component {
 						)
 				}
 				{this.state.err && <Text>Error: {this.state.err}</Text>}
-			</View>
+			</ScrollView>
 		)
 	}
 
@@ -61,7 +74,7 @@ export default class EventsScreen extends React.Component {
 					Authorization: 'Bearer ' + this.state.auth.access_token
 				}
 			}
-		)
+		);
 
 		const eventsJson = await eventsResponse.json()
 

@@ -50,19 +50,38 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const startMoment = moment(this.props.navigation.state.params.startTime).format("HH:MM MM/DD")
-		const endMoment = moment(this.props.navigation.state.params.endTime).format("HH:MM MM/DD")
+		const startMoment = this.props.navigation.state.params.startTime.toLocaleString()
+		const endMoment = this.props.navigation.state.params.startTime.toLocaleString()
 		const { navigate } = this.props.navigation
 
 		return (
 			<View style={styles.container} >
-				<EventView 
-				title={this.props.navigation.state.params.eventType} 
-				desc={this.props.navigation.state.params.description}
-				start_time={{startMoment}}
-				end_time={{endMoment}}
-				/>
+// <<<<<<< HEAD
+// 				<EventView 
+// 				title={this.props.navigation.state.params.eventType} 
+// 				desc={this.props.navigation.state.params.description}
+// 				start_time={{startMoment}}
+// 				end_time={{endMoment}}
+// 				/>
 			   
+// =======
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+					<Text style={styles.creationSubText}> Start:  </Text>
+					<Text style={styles.creationSubText}> {startMoment} </Text>
+				</View>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+					<Text style={styles.creationSubText}> End:  </Text>
+					<Text style={styles.creationSubText}> {endMoment} </Text>
+				</View>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+					<Text style={styles.creationSubText}> Event Type:  </Text>
+					<Text style={styles.creationSubText}> {this.props.navigation.state.params.eventType} </Text>
+				</View>
+				<View style={{ flex: 1, flexDirection: 'row', maxHeight: 80 }}>
+					<Text style={styles.creationSubText}> Description: </Text>
+					<Text style={styles.nameSubText}> {this.props.navigation.state.params.description} </Text>
+				</View>
+// >>>>>>> a3886c1a06bc59967ea0032937f025e6159081c6
 				<TextInput
 					style={{ height: 40, width: 200, borderColor: 'black', borderWidth: 2, }}
 					placeholder='Enter Name'
@@ -125,9 +144,6 @@ export default class InviteScreen extends React.Component {
 	}
 
 	_handleSelectUserUserAsync = async (user) => {
-		// THIS DOESNT WORK RN SO ITS COMMENTED
-		// Add selected user
-		console.log("hello")
 		this.setState( prevState => ({
 			selectedUsers: [...prevState.selectedUsers, user]
 		}));		// Remove selected user from list
@@ -167,7 +183,7 @@ export default class InviteScreen extends React.Component {
 		const data = {
 			event_type_id: this.props.navigation.state.params.eventType,
 			start_time: this.props.navigation.state.params.startTime,
-			end_time: '',
+			end_time: this.props.navigation.state.params.endTime,
 			super_invite_ids: this.state.selectedUsers.map((user) => user.id),
 			description: this.props.navigation.state.params.description
 		}

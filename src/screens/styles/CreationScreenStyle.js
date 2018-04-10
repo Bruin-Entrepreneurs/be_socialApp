@@ -14,7 +14,7 @@ export default StyleSheet.create({
 			justifyContent: 'center',
 			paddingTop: 10,
 	},
-	eventContainer: {
+	timeContainer: {
 			flex: 1,
 			display: 'flex',
     		flexWrap: 'wrap',

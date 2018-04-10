@@ -1,5 +1,6 @@
 import React from 'react';
 import { AsyncStorage, Text, View } from 'react-native';
+import { HeaderBackButton } from 'react-navigation'
 
 import storage from '../globals/storage';
 import { BASE_URL_PROD } from '../globals/constants';
@@ -9,6 +10,13 @@ import styles from './styles/EventDetailScreen';
 
 export default class EventDetailScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
+        headerLeft: <HeaderBackButton
+            onPress={() => {
+                const { navigate } = navigation
+                navigate('Events')
+            }}
+            title='Events'
+        />,
         title: 'Event Detail'
     })
 
@@ -24,48 +32,56 @@ export default class EventDetailScreen extends React.Component {
         this._getEventAsync = this._getEventAsync.bind(this);
     }
 
-    componentDidMount() {
+	componentDidMount() {
         const user = storage.load({
-            key: 'user',
-        }).then((user) => this.setState({ user: user }))
-        const auth = storage.load({
-            key: 'auth',
-        }).then(
-            (auth) => this.setState(prevState => {
-                return Object.assign({}, prevState,
-                    {
-                        auth: auth,
-                    }
-                );
-            }, this._getEventAsync)
-        )
-    }
+			key: 'user',
+		}).then((user) => this.setState({ user: user }))
+    
+		const auth = storage.load({
+			key: 'auth',
+		}).then(
+			(auth) => this.setState(prevState => {
+				return Object.assign({}, prevState, 
+					{
+						auth: auth,
+					}
+				);
+			}, this._getEventAsync)
+		)
+	}
 
-    render() {
-        const { navigate } = this.props.navigation
-        const eventType = this.state.event.event_type
+	render() {
+		const { navigate } = this.props.navigation;
+		const eventType = this.state.event.event_type;
 
-        return (
-            <View style={styles.container}>
-                {
-                    this.state.event ? (
-                        <View style={{ flex: 1 }}>
-                            <EventView title={eventType.name} desc={this.state.event.description} start_time={this.state.event.start_time} end_time={this.state.event.end_time} />
-                            {!this.state.responded && <View style={styles.buttonContainer}>
-                                <Button half title="Accept" onPress={this._handleAccept} />
-                                <Button half title="Decline" onPress={this._handleDecline} />
-                            </View>
-                            }
-                        </View>
-                    ) : (
-                            <Text>Loading Event</Text>
-                        )
-                }
-                {this.state.err && <Text>Error: {this.state.err}</Text>}
-            </View>
-        )
-    }
+		return (
+			<View style={styles.container}>
+				{
+					this.state.event ? (
+						<View style={{ flex: 1 }}>
+								<EventView 
+                                    superlike={this.state.superInvited} 
+                                    title={eventType.name} 
+                                    desc={this.state.event.description} 
+                                    start_time={this.state.event.start_time} 
+                                    end_time={this.state.event.end_time} 
+                                />
+								{!this.state.responded && <View style={styles.buttonContainer}>
+									<Button half title="Accept" onPress={this._handleAccept}/>
+									<Button half title="Decline" onPress={this._handleDecline}/>
+								</View>
+							}
+						</View>
+					) : (
+						<Text> Loading Event </Text>
+					)
+				}
+				{this.state.err && <Text>Error: {this.state.err}</Text>}
+			</View>
+		)
+	}
 
+  
     _getEventAsync = async () => {
         const eventId = this.props.navigation.state.params.id;
         const eventResponse = await fetch(
@@ -83,21 +99,23 @@ export default class EventDetailScreen extends React.Component {
         const eventJson = await eventResponse.json();
 
         if (eventResponse.ok) {
-            this.setState(prevState => {
-                return Object.assign({}, prevState,
-                    {
-                        event: eventJson,
-                    }
-                );
-            });
+          this.setState(prevState => {
+            return Object.assign({}, prevState, 
+              {
+                event: eventJson,
+                responded: (eventJson.accepted.includes(Number(prevState.user.id)) || eventJson.declined.includes(Number(prevState.user.id))),
+                superInvited: (eventJson.super_invited.includes(Number(prevState.user.id))),
+              }
+            )
+          })
         } else {
-            this.setState(prevState => {
-                return Object.assign({}, prevState,
-                    {
-                        err: eventResponse.statusCode,
-                    }
-                );
-            });
+          this.setState(prevState => {
+            return Object.assign({}, prevState, 
+              {
+                err: eventResponse.statusCode,
+              }
+            )
+          })
         }
     }
 
@@ -116,7 +134,9 @@ export default class EventDetailScreen extends React.Component {
         )
 
         if (acceptResponse.ok) {
+            this.setState({ responded: true})
         } else {
+            console.log(acceptResponse)
         }
     }
 
@@ -135,8 +155,9 @@ export default class EventDetailScreen extends React.Component {
         )
 
         if (declineResponse.ok) {
+            this.setState({ responded: true})
         } else {
+            console.log(declineResponse)
         }
     }
-
 }

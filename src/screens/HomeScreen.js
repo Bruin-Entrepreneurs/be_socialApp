@@ -19,15 +19,30 @@ import { CREAM } from '../globals/styles';
 const { height } = Dimensions.get('window')
 
 export default class HomeScreen extends React.Component {
+	static navigationOptions = ({ navigation }) => ({
+		headerLeft: <View></View>
+	})
+
 	constructor(props) {
 		super(props);
 		this.state = {
+			auth: false,
 		}
 		this._handlePressAsync = this._handlePressAsync.bind(this);
 	}
 
+	componentDidMount() {
+		const { navigate } = this.props.navigation
+
+		const auth = storage.load({
+			key: 'auth',
+		})
+		.then((auth) => this.setState({ auth: auth }))
+		.catch((e) => console.log('Not logged in'))
+	}
+
 	render() {
-		const { navigate } = this.props.navigation;
+		const { navigate } = this.props.navigation
 
 		return (
 			<View
@@ -47,7 +62,7 @@ export default class HomeScreen extends React.Component {
 							!this.state.auth ? (
 								<Button title="FB Login" onPress={this._handlePressAsync} />
 							) : (
-									navigate('UserProfile')
+									navigate('Profile')
 							)
 						}
 					</View>
@@ -58,7 +73,6 @@ export default class HomeScreen extends React.Component {
 
 	_handlePressAsync = async () => {
 		const redirectUrl = AuthSession.getRedirectUrl()
-		console.log(redirectUrl)
 		const result = await AuthSession.startAsync({
 			authUrl:
 				`https://www.facebook.com/v2.12/dialog/oauth?response_type=token` +
@@ -93,7 +107,7 @@ export default class HomeScreen extends React.Component {
 		)
 
 		const authResponseJson = await authResponse.json()
-		console.log(authResponseJson)
+
 		storage.save({
 			key: 'auth',
 			data: authResponseJson.token,
@@ -109,7 +123,6 @@ export default class HomeScreen extends React.Component {
 		this.setState({
 			auth: authResponseJson.token
 		})
-
 	}
 
 	_registerForPushNotificationsAsync = async () => {
