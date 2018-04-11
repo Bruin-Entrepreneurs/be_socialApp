@@ -1,6 +1,7 @@
 import React from 'react';
-import { AsyncStorage, Text, View } from 'react-native';
-import { HeaderBackButton } from 'react-navigation'
+import { AsyncStorage, Text, View, ScrollView, } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
+import { Avatar } from 'react-native-elements';
 
 import storage from '../globals/storage';
 import { BASE_URL_PROD } from '../globals/constants';
@@ -25,6 +26,8 @@ export default class EventDetailScreen extends React.Component {
         this.state = {
             event: false,
             superInvited: false,
+            accepted: [],
+            declined: [],
             responded: false,
             err: false,
         }
@@ -77,6 +80,54 @@ export default class EventDetailScreen extends React.Component {
 					)
 				}
 				{this.state.err && <Text>Error: {this.state.err}</Text>}
+                <View style={{ height: 150, flex: 1, flexDirection: 'row', paddingLeft: 10 }}>
+                    {
+                        !this.state.accepted ? (
+                            <Text> Loading </Text>
+                        ) : (
+                                <ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
+                                {
+                                        this.state.accepted
+                                            .map(
+                                                (user) => (
+                                                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                                                        <Avatar medium rounded
+                                                        containerStyle={{ marginTop: 5 }}
+                                                        overlayContainerStyle={{ backgroundColor: 'transparent' }}
+                                                        source={{ uri: user.profile_pic_url }}
+                                                        />
+                                                        <Text >
+                                                            {user.username}
+                                                        </Text>
+                                                    </View>
+                                                )
+                                            )
+                                    }
+                                </ScrollView>
+                            )
+                    }
+
+
+                
+                    <ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
+                        {
+                            this.state.declined
+                            .map((user) => (
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Avatar medium rounded
+                                    containerStyle={{ marginTop: 5 }}
+                                    overlayContainerStyle={{ backgroundColor: 'transparent' }}
+                                    source={{ uri: !user ? '' : user.profile_pic_url }}
+                                    />
+                                    <Text >
+                                        {user.username}
+                                    </Text>
+                                </View>
+                                ))
+                        }
+                    </ScrollView>
+                
+            </View>
 			</View>
 		)
 	}
@@ -97,12 +148,14 @@ export default class EventDetailScreen extends React.Component {
         )
 
         const eventJson = await eventResponse.json();
-        
+        console.log(eventJson); 
         if (eventResponse.ok) {
           this.setState(prevState => {
             return Object.assign({}, prevState, 
               {
                 event: eventJson,
+                accepted: eventJson.accepted,
+                declined: eventJson.declined,
                 responded: (eventJson.accepted.includes(Number(prevState.user.id)) || eventJson.declined.includes(Number(prevState.user.id))),
                 superInvited: (eventJson.super_invited.includes(Number(prevState.user.id))),
               }
