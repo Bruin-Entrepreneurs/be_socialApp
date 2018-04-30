@@ -50,7 +50,7 @@ export default class InviteScreen extends React.Component {
 	}
 
 	render() {
-		const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+		const options = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }
 		const startMoment = this.props.navigation.state.params.startTime.toLocaleString('en-US', options)
 		const endMoment = this.props.navigation.state.params.endTime.toLocaleString('en-US', options)
 		const { navigate } = this.props.navigation

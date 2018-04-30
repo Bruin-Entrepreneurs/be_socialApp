@@ -80,11 +80,13 @@ export default class EventDetailScreen extends React.Component {
 					)
 				}
 				{this.state.err && <Text>Error: {this.state.err}</Text>}
+
                 <View style={{ height: 150, flex: 1, flexDirection: 'row', paddingLeft: 10 }}>
                     {
                         !this.state.accepted ? (
-                            <Text> Loading </Text>
-                        ) : (
+                            <Text > Loading </Text>
+                        ) : (   <View>
+                                <Text style={styles.acceptDeclineText}> Accepted </Text>
                                 <ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
                                 {
                                         this.state.accepted
@@ -96,7 +98,8 @@ export default class EventDetailScreen extends React.Component {
                                                         overlayContainerStyle={{ backgroundColor: 'transparent' }}
                                                         source={{ uri: user.profile_pic_url }}
                                                         />
-                                                        <Text >
+                                                        <Text style={styles.nameSubText} >
+                                                       
                                                             {user.username}
                                                         </Text>
                                                     </View>
@@ -104,11 +107,12 @@ export default class EventDetailScreen extends React.Component {
                                             )
                                     }
                                 </ScrollView>
+                                </View>
                             )
                     }
 
-
-                
+                    <View>
+                    <Text style={styles.acceptDeclineText}> Declined </Text>
                     <ScrollView contentContainerStyle={{ marginBottom: 20 }} horizontal={false} alwaysBounceHorizontal={false}>
                         {
                             this.state.declined
@@ -119,14 +123,15 @@ export default class EventDetailScreen extends React.Component {
                                     overlayContainerStyle={{ backgroundColor: 'transparent' }}
                                     source={{ uri: !user ? '' : user.profile_pic_url }}
                                     />
-                                    <Text >
+                                    <Text style={styles.nameSubText}>
+                                        
                                         {user.username}
                                     </Text>
                                 </View>
                                 ))
                         }
                     </ScrollView>
-                
+                    </View>
             </View>
 			</View>
 		)
