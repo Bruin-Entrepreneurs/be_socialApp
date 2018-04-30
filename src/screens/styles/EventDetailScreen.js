@@ -11,4 +11,15 @@ export default StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 	},
+	acceptDeclineText: {
+		fontSize: 20, 
+		fontWeight: 'bold', 
+		paddingTop: 10,
+	}, 
+	nameSubText: {
+		fontSize: 15,
+		paddingTop: 15,
+		paddingLeft: 10,
+		width: '50%'
+	},
 });
