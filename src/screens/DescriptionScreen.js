@@ -1,135 +1,153 @@
-import React from "react";
-import { Image, Picker, Text, Keyboard, TextInput, View } from "react-native";
-import { StackNavigator } from "react-navigation";
+import React from 'react'
+import {
+	Image,
+	Picker,
+	Text,
+	TextInput,
+	Keyboard, 
+	TouchableWithoutFeedback,
+	View,
+} from 'react-native'
+import { StackNavigator } from 'react-navigation'
 
-import storage from "../globals/storage";
-import Button from "../components/Button";
-import styles from "./styles/CreationScreenStyle";
-import { BASE_URL_PROD } from "../globals/constants";
+import storage from '../globals/storage'
+import Button from '../components/Button'
+import styles from './styles/CreationScreenStyle'
+import { BASE_URL_PROD } from '../globals/constants'
 
-const moment = require("moment");
-const idLocale = require("moment/locale/id");
-moment.locale("id", idLocale);
+const moment = require('moment');
+const idLocale = require('moment/locale/id');
+moment.locale('id', idLocale);
 
 export default class DescriptionScreen extends React.Component {
-  static navigationOptions = {
-    title: "Step 2: Description"
-  };
+	static navigationOptions = {
+		title: 'Step 2: Description',
+	}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      picker: false,
-      pickerVal: 0,
-      description: ""
-    };
-    this.updateDatePicker = this.updateDatePicker.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			picker: false,
+			pickerVal: 0,
+			description: '',
+		}
+		this.updateDatePicker = this.updateDatePicker.bind(this);
+	}
 
-  componentDidMount() {
-    const auth = storage
-      .load({
-        key: "auth"
-      })
-      .then(auth => this.setState({ auth: auth }, this._getEventTypesAsync));
-  }
+	componentDidMount() {
+		const auth = storage.load({
+			key: 'auth',
+		}).then(
+			(auth) => this.setState({ auth: auth }, this._getEventTypesAsync)
+		)
+	}
 
-  updateDatePicker() {
-    this.setState(prevState => {
-      return Object.assign({}, prevState, {
-        picker: !this.state.picker
-      });
-    });
-  }
+	updateDatePicker() {
+		this.setState(prevState => {
+			return Object.assign({}, prevState,
+				{
+					picker: !this.state.picker,
+				}
+			)
+		})
+	}
 
-  toggleModal() {
-    this.setState(prevState => {
-      return Object.assign({}, prevState, {
-        picker: !this.state.picker
-      });
-    });
-  }
+	toggleModal() {
+		this.setState(prevState => {
+			return Object.assign({}, prevState,
+				{
+					picker: !this.state.picker,
+				}
+			)
+		})
+	}
 
-  render() {
-    const { navigate } = this.props.navigation;
+	render() {
+		const { navigate } = this.props.navigation
 
-    return (
-      <View style={styles.eventContainer}>
-        <Text style={styles.creationTitleText}>Describe Event</Text>
-        <Text style={styles.creationSubText}> Type </Text>
-        <View>
-          {!this.state.eventTypes ? (
-            <Text> Loading </Text>
-          ) : (
-            <Picker
-              selectedValue={this.state.pickerVal}
-              mode="dropdown"
-              onValueChange={(pickerVal, itemIndex) =>
-                this.setState({ pickerVal })
-              }
-            >
-              {this.state.eventTypes.map((eventType, i) => (
-                <Picker.Item
-                  key={eventType.id}
-                  label={eventType.name}
-                  value={eventType.id}
-                />
-              ))}
-            </Picker>
-          )}
-        </View>
+		return (
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<View style={styles.eventContainer}>
+				<Text style={styles.creationTitleText}>Describe Event</Text>
+				<Text style={styles.creationSubText}> Type </Text>
+				<View>
+					{
+						!this.state.eventTypes ? (
+							<Text> Loading </Text>
+						) : (
+								<Picker
+									selectedValue={this.state.pickerVal}
+									mode="dropdown"
+									onValueChange={
+										(pickerVal, itemIndex) => this.setState({ pickerVal })
+									}>
+									{
+										this.state.eventTypes.map(
+											(eventType, i) => (
+												<Picker.Item
+													key={eventType.id}
+													label={eventType.name}
+													value={eventType.id}
+												/>
+											)
+										)
+									}
+								</Picker>
+							)
+					}
+				</View>
 
-        <Text style={styles.creationSubText}> Description </Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={5}
-          style={{
-            paddingLeft: 10,
-            paddingBottom: 10,
-            textAlignVertical: "top"
-          }}
-          placeholder="Enter Description"
-          onChangeText={text => this.setState({ description: text })}
-          onSubmitEditing={Keyboard.dismiss}
-        />
+				<Text style={styles.creationSubText}> Description </Text>
+				<TextInput
+					multiline={true}
+					numberOfLines={5}
+					style={{ paddingLeft: 10, paddingBottom: 10,textAlignVertical: 'top'}}
+					placeholder='Enter Description'
+					onChangeText={(text) => this.setState({ description: text })}
+				/>
 
-        <Button
-          title="Next"
-          onPress={() =>
-            navigate("Invite", {
-              startTime: this.props.navigation.state.params.startTime,
-              endTime: this.props.navigation.state.params.endTime,
-              eventType: this.state.pickerVal,
-              description: this.state.description
-            })
-          }
-        />
-      </View>
-    );
-  }
+				<Button
+					title="Next"
+					onPress={
+						() => navigate('Invite', {
+							startTime: this.props.navigation.state.params.startTime,
+							endTime: this.props.navigation.state.params.endTime, 
+							eventType: this.state.pickerVal,
+							description: this.state.description
+						}
+						)
+					}
+				/>
+			</View>
+		</TouchableWithoutFeedback>
+		)
+	}
 
-  _getEventTypesAsync = async () => {
-    let eventTypesResponse = await fetch(BASE_URL_PROD + "/event/types/", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.state.auth.access_token
-      }
-    });
+	_getEventTypesAsync = async () => {
+		let eventTypesResponse = await fetch(
+			BASE_URL_PROD + '/event/types/',
+			{
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + this.state.auth.access_token
+				}
+			}
+		)
 
-    const eventTypesJson = await eventTypesResponse.json();
+		const eventTypesJson = await eventTypesResponse.json()
 
-    if (eventTypesResponse.ok) {
-      this.setState({
-        eventTypes: eventTypesJson
-      });
-      // Set initial state for picker value
-      this.setState({
-        pickerVal: eventTypesJson[0].id
-      });
-    } else {
-      console.log(eventTypesResponse);
-    }
-  };
+		if (eventTypesResponse.ok) {
+			this.setState({
+				eventTypes: eventTypesJson
+			})
+			// Set initial state for picker value
+			this.setState({
+				pickerVal: eventTypesJson[0].id
+			})
+		} else {
+			console.log(eventTypesResponse)
+		}
+	}
 }

@@ -31,7 +31,8 @@ export default class EventDetailScreen extends React.Component {
       accepted: [],
       declined: [],
       responded: false,
-      err: false
+      err: false, 
+      user: false,
     };
 
     this._getEventAsync = this._getEventAsync.bind(this);
@@ -172,6 +173,20 @@ export default class EventDetailScreen extends React.Component {
           )
         });
       });
+      for (let i = 0; i < this.state.accepted.length; i++) {
+        if (this.state.accepted[i].id == this.state.user.id) {
+          this.setState({
+            responded: true
+          }); 
+        }
+      }
+      for (let i = 0; i < this.state.declined.length; i++) {
+          if (this.state.declined[i].id == this.state.user.id) {
+            this.setState({
+              responded: true
+            });
+          }
+      }
     } else {
       this.setState(prevState => {
         return Object.assign({}, prevState, {
@@ -196,6 +211,9 @@ export default class EventDetailScreen extends React.Component {
     );
 
     console.log(acceptResponse);
+    this.setState(prevState => ({
+      accepted: [...prevState.accepted, this.state.user]
+    }))
 
     if (acceptResponse.ok) {
       this.setState({ responded: true });
@@ -217,7 +235,10 @@ export default class EventDetailScreen extends React.Component {
         }
       }
     );
+    this.setState(prevState => ({
+      declined: [...prevState.declined, this.state.user]
 
+    }))
     if (declineResponse.ok) {
       this.setState({ responded: true });
     } else {
